@@ -1,0 +1,242 @@
+#container {
+    display: grid;
+    grid-template-rows: 47% 33% 0.2% 19.8%;
+}
+
+hr {
+    border: 2px solid var(--color-text-home);
+    border-radius: 10px;
+    width: 80rem;
+    justify-self: center;   
+}
+
+#container .upper-container {
+    background-image: url('/img/usa-landing-page.jpg');
+
+    min-height: 100vh;
+    height: 100vh;
+
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: grid; 
+    grid-template-rows: 30% 70%;
+}
+
+#container .upper-container .button-container {
+    justify-self: center; /* grid */
+    align-self: center;   /* grid */
+
+    display: flex;
+    flex-direction: column;
+
+    height: 15rem;
+}
+
+#container .upper-container .logo-container {
+    align-self: center;
+}
+
+#container .upper-container .logo-container img {
+    width: 940px;
+    height: 194px;
+}
+
+.upper-container .button-container input {
+    position: relative;
+    margin-top: 2rem;
+
+    font-family: 'Varela Round'; 
+    font-size: 1.9rem;
+    font-weight: bold;
+    color: white; 
+    text-align: center;
+
+    background: var(--color-secondary-background);
+    border: none; 
+    border-radius: 10px;
+    cursor: pointer;
+
+    width: 23rem;
+    height: 5rem;
+
+    transition: background 0.2s; 
+}
+
+.upper-container .button-container input:hover {
+    background-color: #14837b;
+}
+
+.middle-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.middle-container h1 {
+    font-size: 7rem;
+    font-weight: bold;
+
+    justify-self: center; /* grid */
+
+    color: var(--color-text-home);
+}
+
+.middle-container .free-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.middle-container span {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--color-text-home);
+}
+
+.middle-container img {
+    width: auto;
+    height: auto;
+}
+
+.footer-container {
+    display: grid;
+
+    grid-template-rows: fit-content(1fr 1fr  1fr);
+}
+
+.footer-container h1 {
+    font-size: 7rem;
+    font-weight: bold;
+    color: var(--color-text-home);
+
+    justify-self: center;
+}
+
+.footer-container .how-it-works-container {
+    font-size: 2.5rem;
+    color: var(--color-text-home);
+    font-weight: bold;
+}
+
+.footer-container .how-it-works-container ol {
+    margin-left: 5rem;    
+}
+
+.footer-container .how-it-works-container p {
+    margin-left: 1.5rem;    
+}
+
+#form-container {
+    display: none;
+}
+
+#page-landing .clicked {
+    display: inline;
+    position: absolute;
+    margin: 100px 40vw 0px 40vw;
+    z-index: 1;
+}
+
+#form-container .body-container .input-block input, #form-container .body-container, input {
+    font-family: 'Varela Round';
+}
+
+#form-container .body-container {
+    background: white;
+    border-radius: 10px;
+
+    display: flex; 
+    flex-direction: column;
+
+    height: 40rem;
+    width: 30rem;
+    
+    align-items: center;
+}
+
+#form-container .body-container h1 {
+    background: var(--color-primary-background);
+    color: white;
+    border-radius: 7px;
+
+    text-align: center;
+
+
+    height: 4rem;
+    padding: 5px;
+}
+
+#form-container .body-container form {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+#form-container .body-container form input {
+    margin-top: 2rem;
+}
+
+#form-container .body-container form .input-block {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+
+    row-gap:  30px;
+
+    font-size: 2rem;    
+}
+
+#form-container .body-container form .input-block input {
+    background: var(--color-primary-input);
+    border: 1px solid var(--color-border-input);
+    color: var( --color-text-input);
+    border-radius: 10px;
+
+    width: 100%;
+    height: 30px;
+}
+
+#form-container .body-container form > input {
+    width: 90px;
+    height: 38px;
+
+    margin-top: 40px;
+
+    background: var(--color-secondary-background);
+    border: none;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 1.5rem;
+    font-family: 'Varela Round';
+    border-radius: 10px;
+    
+    cursor: pointer;
+
+    transition: background 0.2s; 
+}
+
+#form-container .body-container form > input:hover {
+    background: #0f8d85;
+}
+
+#form-container .body-container {
+    display: grid;
+    grid-template-rows: 10% 90%;
+
+    /* row-gap: 30px; */
+}
+
+@media (max-width: 1024px) {
+    .middle-container  {
+        position: relative;
+        margin-top: 25rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .middle-container {
+        position: relative;
+        margin-top: 7rem;
+    }
+}

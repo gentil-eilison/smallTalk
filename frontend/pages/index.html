@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Small Talk | O seu site de para conversação de idiomas estrangeiros gratuito</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/partials/page-landing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+</head>
+<body id="page-landing">
+    <div id="form-container">
+        <div class="body-container">
+            <h1>Preencha com seus dados</h1>
+                <form method="POST" action="/login">
+                    <div class="input-block">
+                        
+                        <div class="email-input">
+                            <label for="email">Email</label> <br>
+                            <input type="email" name="email" placeholder="jotaro@jojo.com">
+                        </div>
+                        
+                        <div class="password-input">
+                            <label for="senha">Senha</label> <br>
+                            <input type="password" name="pw" placeholder="Digite uma senha">
+                        </div>
+                     
+                    </div>
+                    <input type="submit" value="Fazer login"></input>
+                </form>
+        </div>
+    </div>
+
+    <div id="container">
+        <div class="upper-container">
+
+            <div class="logo-container">
+                <img src="/img/small-talk-logo.svg" alt="small-talk-logo">
+            </div>
+           
+
+           <div class="button-container">
+               <input type="button" class="login-button" onclick="showLoginWindow()" value="Login"></input>
+               <form method="GET">
+                <input type="submit" class="register-button" value="Registrar-se" formaction="/register"></input>
+               </form>
+               
+           </div>
+
+        </div>
+
+        <div class="middle-container">
+            <h1>Por que o Small Talk?</h1>
+
+            <div class="free-container">
+                <span>Uma alternativa fácil, grátis e simples para exercitar a <br> conversação em línguas estrangeiras</span>
+                <img src="/img/home-1.PNG" alt="free-container">
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="footer-container">
+            <h1>Como funciona?</h1>
+
+            <div class="how-it-works-container">
+                <p>É simples!</p>
+                <ol>
+                    <li>Encontre um amigo para conversar</li>
+                    <li>Adicione-o à sua lista de amigos e marquem uma conversa</li>
+                    <li>Small talk</li>
+                </ol>
+                <img src="/img/home-2.PNG" alt="how-it-works-container">
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/loginAction.js"></script>
+</body>
+</html>

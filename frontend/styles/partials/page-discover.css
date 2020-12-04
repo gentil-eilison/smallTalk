@@ -1,0 +1,362 @@
+.top-container .notifications {
+    margin-right: 20px;
+}
+
+.top-container ul {
+    list-style: none;
+}
+
+.top-container ul li {
+    display: inline;
+}
+
+.top-container ul li a {
+    display: inline-block;
+    width: 200px;
+    height: 30px;
+    margin-right: 10px;
+    font-size: 1.4rem;
+
+    text-decoration: none;
+    text-align: center;
+    line-height: 30px;  
+
+    color: white; 
+    background: var(--color-secondary-background);
+    border-radius: 50px;
+
+    transition: background 0.2s;
+}
+
+.top-container ul li a:hover {
+    color: var(--color-secondary-background);
+    background: white;
+}
+
+.body-container .profile-item {
+    width: 333px;
+    height: 280px;
+
+    margin-top: 20px;
+    margin-left: 25px;
+    grid-area: profile-item;
+
+    background: var(--color-primary-input);
+    border: none;
+    border-radius: 25px;
+}
+
+.body-container .profile-item .heading img, .body-container .discover-area .friend-item .heading img {
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.body-container .profile-item .heading .title, .body-container .discover-area .friend-item .heading .title {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.body-container .profile-item .heading .title span, .body-container .discover-area .friend-item .heading .title span {
+    margin-top: 25px;
+    margin-right: 50px;
+
+    font-size: 20px;    
+    font-weight: 700;
+}
+
+.body-container .profile-item .heading .languages, .body-container .discover-area .friend-item .heading .languages {
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+}
+
+.body-container .profile-item .heading .languages img, .body-container .discover-area .friend-item .heading .languages img {
+    margin-right: 9px;
+}
+
+.body-container .profile-item .footer form, .body-container .discover-area .friend-item .footer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.body-container .profile-item .footer input[type="submit"], .body-container .discover-area .friend-item .footer button {
+    width: 120px;
+    height: 40px;
+
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    font-family: 'Varela Round';
+
+    border: none;
+    border-radius: 90px;
+
+    cursor: pointer;
+}
+
+.body-container .profile-item .footer .profile-button, .body-container .discover-area .friend-item .profile-button {
+    background: var(--color-secondary-background);
+
+    transition: background 0.2s;
+}
+
+.body-container .profile-item .footer .profile-button:hover {
+    background: #107972;
+}
+
+.body-container .discover-area .friend-item .footer .profile-button:hover {
+    background: #107972;
+}
+
+.body-container .profile-item .footer .logout-button, .body-container .discover-area .friend-item .footer .add-button {
+    background: var(--color-button-secondary);
+
+    transition: background 0.2s;
+}
+
+.body-container .profile-item .footer .logout-button:hover {
+    background: #a30c0c;
+}
+
+.body-container .discover-area .friend-item .footer .add-button:hover {
+    background: #a30c0c;
+}
+
+.filter-checkbox {
+    margin-left: 25px;
+    margin-top: 25px; 
+    margin-bottom: 10px;
+
+    display: inline-block;
+    grid-area: filter-checkbox;
+}
+
+.body-container .filter-checkbox form input[type="submit"] {
+    position: relative;
+    margin-top: 10px;
+    padding: 7px;
+
+    width: 150px;
+
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: var(--color-secondary-background);
+    color: white;
+    
+    font-weight: bold;
+    font-family: 'Varela Round';
+
+    transition: background 0.2s;
+}
+
+.body-container .filter-checkbox form input[type="submit"]:hover {
+    background: #178079;
+}
+
+.filter-checkbox h2 {
+    display: inline-block; 
+    margin-bottom: 16px;
+    
+    width: 280px;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 10px;
+
+    border-radius: 10px;
+    color: white;
+    background: var(--color-primary-background);
+}
+
+.filter-checkbox .input-block input[type="checkbox"] {
+	-webkit-appearance: none;
+    background-color: var(--color-secondary-input);
+    border-radius: 10px;
+	
+	
+	display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    margin-top: 5px;
+    padding: 9px;
+
+    width: 30px;
+    height: 30px;
+    
+    transition: background 0.2s;
+}
+
+.filter-checkbox .input-block input:checked {
+    background : var(--color-secondary-background);
+}
+
+.filter-checkbox .input-block label {
+    position: relative;
+    font-size: 18px;
+    text-align: 30px;
+}
+
+#container .body-container {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    grid-template-rows: 300px 1fr;
+    grid-template-areas: 
+    "profile-item discover-area"
+    "filter-checkbox discover-area";
+    column-gap: 100px;
+}
+
+.body-container .discover-area {
+    background: var(--color-primary-input);
+    border-radius: 10px;
+    
+    grid-area: discover-area;
+    margin-top: 20px;
+    margin-right: 50px;
+
+    display: grid; 
+    grid-template-columns: 1fr 1fr;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    max-height: 85vh;
+}
+
+.body-container .discover-area .friend-item {
+    width: 300px;
+    height: 250px;
+
+    margin-top: 20px;
+    margin-left: 25px;
+
+    background: var(--color-primary-background);
+    color: white;
+    border: none;
+    border-radius: 25px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: var(--color-primary-background);
+}
+
+@media (max-width: 700px) {
+    .top-container .notifications {
+        width: 35px;
+        height: 35px;
+    }
+
+    .top-container ul li a {
+        font-size: 1rem;
+        
+        width: 100%;
+        display: absolute;
+        margin-top: 7rem;
+        margin-right: 2rem;
+        border-radius: 10px;
+
+        box-shadow: 0 8px 6px -6px #444;
+        
+    }
+
+    .body-container .profile-item {
+        display: none;
+    }
+
+    #container .body-container {
+        display: grid; 
+        grid-template-rows: 30vh 70vh;
+        grid-template-areas: 
+        "filter-checkbox"
+        "discover-area";
+        grid-template-columns: none;
+        column-gap: 0;
+    }
+
+    .body-container .filter-checkbox .input-block div {
+        display: inline-block;
+        font-size: 2rem;
+        margin-top: 1rem;
+        margin-left: 1rem;
+
+    }
+
+    .body-container .filter-checkbox {
+        justify-self: center;
+    }
+
+    .body-container .filter-checkbox h2 {
+        width: 90vw;
+    }
+
+    .body-container .discover-area {
+        max-width: 90vw; 
+        max-height: 90vh;
+        margin-left: 1.5rem;
+        margin-right: 0;
+        margin-bottom: 0;
+        margin-top: 1rem;
+
+        padding: 1.2rem;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .body-container .discover-area .friend-item {
+        width: 95%;
+        margin-left: 0;
+        
+    }
+
+    .body-container .discover-area .friend-item .heading .title span {
+        font-size: 1.4rem;
+        margin-left: 1rem;
+    }
+
+    .body-container .discover-area .friend-item .footer {
+        display: flex;
+        justify-content: space-around;
+
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .body-container .discover-area {
+         
+            max-width: 90vw; 
+            max-height: 90vh;
+            margin-left: 1.5rem;
+            margin-right: 0;
+            margin-bottom: 0;
+            margin-top: 1rem;
+    
+            padding: 1.2rem;
+    
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        
+    }
+}
+
+@media (max-width: 768px) {
+    .top-container ul li a {
+        width: 100%;
+        display: inline-block;
+        margin-right: 2.5rem;
+    }
+
+    .body-container .discover-area {
+        margin-right: 1.5rem;
+    }
+
+    .top-container ul li {
+        display: inline-block;
+    }
+}

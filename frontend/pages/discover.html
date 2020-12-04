@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/partials/page-discover.css">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+   
+
+</head>
+<body id="page-discover">
+    <div id="container">
+        <div class="top-container">
+            <a href="page-landing.html"><img src="/img/small-talk-favicon.svg" alt="SmallTalk" width="120px" height="90px"></a>
+            <ul>
+                <li><a href="/friends">AMIGOS</a></li>
+                <li><a href="/discover">DISCOVER</a></li>
+                <li><a href="/profile">PERFIL</a></li>
+            </ul>
+            <img class="notifications" src="/img/notifications.svg" alt="notifications" width="50px" height="50px">
+        </div>
+
+        <div class="body-container">
+            <div class="profile-item">
+                <div class="heading">
+                    <div class="title">
+                        <img src="/img/profile_01.svg" alt="profile_01" width="75px" height="75px">
+                        <span>Obi Wan Kenobi</span>
+                    </div>
+                    
+                    <div class="languages">
+                     
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <form method="GET">
+                        <input type="submit" class="profile-button" value="Perfil">
+                        <input type="submit" class="logout-button" value="Sair" formaction="/exit">
+                    </form>
+                </div>
+            </div>
+
+            <div class="filter-checkbox">
+                <h2>FILTROS</h2>
+                <form method="GET">
+                    <div class="input-block">
+                        <div>
+                            <input type="checkbox" name="filter" id="games" value="games">
+                            <label for="games">Games</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="filter" id="anime-manga" value="anime-manga">
+                            <label for="anime-manga">Animes e Mangás</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" name="filter" id="life" value="life">
+                            <label for="life">Vida</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" name="filter" id="health" value="health">
+                            <label for="health">Saúde</label>
+                        </div>
+                    </div>
+
+                    <input type="submit" value="FILTRAR" formaction="/discover">
+                </form>
+        </div>
+            
+            <div class="discover-area">
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script type="module" src="../js/discover.js"></script>
+</body>
+</html>

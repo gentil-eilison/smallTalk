@@ -1,0 +1,54 @@
+/* 
+299C95: Verdinho
+DC1C1C: Vermelhinho
+C4C4C4: Cinzento
+F9F3F3: Pele clara
+EBE5E5: Cinza cool
+*/
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+* {
+    font-family: 'Varela Round', sans-serif;
+}
+
+[colorido] {
+    background-color: #F9F3F3;
+}
+
+[colorido2] {
+    background-color: #EBE5E5;
+}
+
+[titulo] {
+    background-color: #299C95;
+    color: #FFF;
+}
+
+.botao-verde {
+    background-color: #299C95;
+    color: #FFF;
+}
+
+.botao-vermelho {
+    background-color: #DC1C1C;
+    color: #FFF;
+    border-radius: 10px;
+}
+
+.botao-verde:hover , .botao-vermelho:hover {
+    color: #FFF;
+}
+
+[icon] {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+div[idioma] > img {
+    width: 45px;
+    height: 45px;
+}
+
+[nome] {
+    font-size: 1.2em;
+}

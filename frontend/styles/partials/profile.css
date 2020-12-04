@@ -1,0 +1,170 @@
+/* 
+299C95: Verdinho
+DC1C1C: Vermelhinho
+C4C4C4: Cinzento
+F9F3F3: Pele clara
+EBE5E5: Cinza cool
+4A41A9: Roxo
+*/
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+* {
+    font-family: 'Varela Round', sans-serif;
+    outline: none;
+}
+
+::-webkit-scrollbar {
+    background: #b8b4b4;
+    height: 7px;
+    width: 50%;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #868383;
+}
+
+.languages-container {
+    overflow-x: scroll;
+}
+
+[colorido] {
+    background-color: #f0e7e7;
+}
+
+[colorido2] {
+    background-color: #EBE5E5;
+}
+
+[foto-perfil] {
+    width: 200px;
+    height: 200px;
+}
+
+[interesses] {
+    background-color: #f0e7e7;
+}
+
+[titulo] {
+    background-color: #299C95;
+    color: #FFF;
+}
+
+[interest] {
+    background-color: #4A41A9;
+    color: #FFF;
+    width: 12em;
+    border-radius: 90px;
+    font-size: 1.1em;
+}
+
+.interested {
+    border-color: #4A41A9;
+    background-color: #FFF;
+    color: #4A41A9;
+}
+
+[games]:hover, [anime-manga]:hover, [life]:hover, [health]:hover{
+    cursor: pointer;
+}
+
+.botao-verde, .redondo {
+    background-color: #299C95;
+    color: #FFF;
+    border-radius: 90px;
+}
+
+.botao-verde {
+    background-color: #299C95;
+    color: #FFF;
+    border-radius: 10px;
+
+    transition: background 0.2s
+}
+
+.botao-vermelho {
+    background-color: #DC1C1C;
+    color: #FFF;
+    border-radius: 10px;
+    
+    transition: background 0.2s
+}
+
+.botao-verde:hover {
+    color: #FFF;
+    background: #14837b;
+}
+
+.botao-vermelho:hover {
+    color: #FFF;
+    background: #a80a0a;
+}
+
+[adicionar] {
+    background-color: #4A41A9;
+    color: #FFF;
+
+    transition: background 0.2s;
+}
+
+[adicionar]:hover {
+    color: #FFF;
+    background-color:  #3d3597;
+}
+
+body {
+    margin: none;
+}
+
+.hidden {
+    display: none;
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    background-color: #C4C4C4;
+    border-radius: 10px;
+	
+	
+	display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    margin-top: 5px;
+    padding: 9px;
+
+    width: 30px;
+    height: 30px;
+    
+    transition: background 0.2s;
+}
+
+input[type="checkbox"]:checked {
+    background: #299C95;
+}
+
+input {
+    cursor: pointer;
+}
+
+[icon] {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 100px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+[nome] {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+input[name="inter"] {
+    display: none;
+}
+
+input[value="REMOVER"] {
+    border-radius: 4px;
+}
+

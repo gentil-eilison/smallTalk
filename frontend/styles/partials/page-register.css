@@ -1,0 +1,151 @@
+.top-container span {
+    margin-right: 50px;
+    font-size: 2rem;
+}
+
+.body-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 50px;
+}
+
+.body-container form {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+
+.body-container form .input-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: 
+    "nome data"
+    "email sexo"
+    "senha c-senha";
+
+    column-gap: 60px;
+    
+    margin-top: 20px;
+
+    
+}
+
+.body-container form .input-block .name-input {
+    grid-area: nome;
+}
+
+.body-container form .input-block .birthday-input {
+    grid-area: data;
+}
+
+.body-container form .input-block .email-input {
+    grid-area: email;
+}
+
+.body-container form .input-block .password-input {
+    grid-area: senha;
+}
+
+.body-container form .input-block .confirm-password-input {
+    grid-area: c-senha;
+}
+
+.body-container form .input-block label, .body-container form .input-block input {
+    display: block;
+}
+
+.body-container form .input-block label {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.body-container form input[type="submit"] {
+    width: 175px;
+    height: 50px;
+
+    margin-top: 20px;
+
+    background: var(--color-secondary-background);
+    border: 1px solid #635555;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: 'Varela Round';
+    border-radius: 10px;
+    
+    cursor: pointer;
+
+    transition: background 0.2s; 
+
+}
+
+.body-container form input[type="submit"]:hover {
+    background: #15837c;
+}
+
+.body-container form .input-block input, .body-container form .select-block select {
+    width: 300px;
+    height: 30px;
+
+    background: var(--color-primary-input);
+    border: 1px solid var(--color-border-input);
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-family: 'Varela Round';
+    color: var(--color-text-input);
+    font-weight: 700;
+    text-align: center;
+}
+
+.body-container form .select-block label, .body-container form .select-block select {
+    display: block;
+}
+
+.body-container form .select-block label {
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+}
+
+@media (max-width: 700px) {
+    .body-container form .select-block,
+    .body-container form .input-block,
+    .body-container form .input-block name-input,
+    .body-container form .input-block birthday-input,
+    .body-container form .input-block email-input,
+    .body-container form .input-block password-input,
+    .body-container form .input-block .confirm-password-input {
+        display: block;
+        font-size: 2rem; 
+    }
+
+    .body-container form {
+        margin-left: 1rem;
+    }
+
+    .body-container form .input-block input, .body-container form .select-block select {
+        width: 80vw;
+    }
+
+    .body-container span {
+        font-size: 1rem;
+    }
+
+    .body-container {
+        margin-top: -0.25rem;
+    }
+
+    #container .top-container span {
+        font-size: 1.5rem;
+    }
+
+    #container .top-container {
+        position: sticky;
+        top: 0; 
+    }
+
+}

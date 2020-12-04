@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Small Talk | Registrar-se</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/partials/page-register.css">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+
+</head>
+<body id="page-register">
+    <script>0</script>
+    <div id="container">
+        <div class="top-container">
+            <a href="page-landing.html"><img src="/img/small-talk-favicon.svg" alt="SmallTalk" width="120px" height="90px"></a>
+            
+            <span>REGISTRAR-SE</span>
+        </div>
+
+        <div class="body-container">
+            <h1>Por favor, preencha todos os cambos abaixo</h1>
+                <form method="POST" action="/createUser">
+                    <div class="input-block">
+                        <div class="name-input">
+                            <label for="nome">Nome completo</label>
+                            <input type="text" name="user_name" placeholder="Digite seu nome">
+                        </div>
+                        
+                        <div class="email-input">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" placeholder="jotaro@jojo.com">
+                        </div>
+                        
+                        <div class="password-input">
+                            <label for="senha">Senha</label>
+                            <input type="password" name="pw" placeholder="Digite uma senha">
+                        </div>
+
+                        <div class="confirm-password-input">
+                            <label for="confirmar-senha">Confirmar senha</label>
+                            <input type="password" name="cpw" placeholder="Confime sua senha">
+                        </div>
+                        
+                        <div class="birthday-input">
+                            <label for="data-de-nascimento">Data de nascimento</label>
+                            <input type="date" name="birthdate" placeholder="dd/mm/yy">
+                        </div>
+                          
+                    </div>
+                    <div class="select-block">
+                        <label for="sexo">Sexo</label>
+                        <select name="sexo" id="sexo">
+                            <option value="">Selecione o sexo</option>
+                            <option value="m">Masculino</option>
+                            <option value="f">Feminino</option>
+                            <option value="nb">Não binário</option>
+                        </select>
+                    </div>
+                    <input type="submit" value="Criar conta"></input>
+                </form>
+                
+        </div>
+    </div>
+</body>
+</html>
