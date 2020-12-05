@@ -27,12 +27,15 @@ EBE5E5: Cinza cool
 .botao-verde {
     background-color: #299C95;
     color: #FFF;
+    border: 0px;
+    border-radius: 90px;
 }
 
 .botao-vermelho {
     background-color: #DC1C1C;
     color: #FFF;
-    border-radius: 10px;
+    border: 0px;
+    border-radius: 90px;
 }
 
 .botao-verde:hover , .botao-vermelho:hover {
@@ -51,4 +54,37 @@ div[idioma] > img {
 
 [nome] {
     font-size: 1.2em;
+}
+
+.friends-container {
+    border: 1px solid black;
+}
+
+[friend] {
+    border: 1px solid black;
+    background-color: #f0e4e4;
+}
+
+[friend-icon] {
+    width: 55px;
+    height: 60px;
+}
+
+[f-lang] {
+    width: 2.5em;
+    height: 2.5em;
+}
+
+[nickname], [f-lang] {  
+    border: 1px solid black;
+}
+
+.botao-verde:hover {
+    color: #FFF;
+    background: #14837b;
+}
+
+.botao-vermelho:hover {
+    color: #FFF;
+    background: #a80a0a;
 }
