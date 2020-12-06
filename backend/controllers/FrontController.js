@@ -1,13 +1,13 @@
 const mysql = require('../config')
 
 module.exports = {
-    getLoggedUser(req, res, next) {
+    getLoggedUser(req, res) {
         mysql.query('select * from users where id = ?', [global.userId] ,function(err, results) {
             res.send(results[0])
         })
     },
 
-    getUserLanguages(req, res, next) {
+    getUserLanguages(req, res) {
         mysql.query('select lang_id from users_languages where user_id = ?', [global.userId], function(err, results) {
             if(err) {
                 throw err
@@ -35,7 +35,7 @@ module.exports = {
         })
     },
 
-    getNotLoggedUsers(req, res, next) {
+    getNotLoggedUsers(req, res) {
         mysql.query('select * from users where id != ?', [global.userId], function(err, results) {
             if(err) {
                 throw err
@@ -45,7 +45,7 @@ module.exports = {
         }) 
     },
 
-    getNotLoggedUsersLanguages(req, res, next) {
+    getNotLoggedUsersLanguages(req, res) {
         mysql.query('select lang_id, user_id from users_languages where user_id != ?', [global.userId], function(err, results) {
             if(err) {
                 throw err
@@ -86,7 +86,7 @@ module.exports = {
         })
     },
 
-    getUserInterests(req, res, next) {
+    getUserInterests(req, res) {
         mysql.query('select interest_id from users_interests where user_id = ?', [global.userId], (err, results) => {
             if(err) {
                 throw err 
@@ -97,7 +97,7 @@ module.exports = {
         })
     },
 
-    getUserLanguagesId(req, res, next) {
+    getUserLanguagesId(req, res) {
         mysql.query('select lang_id from users_languages where user_id = ?', [global.userId], function(err, results) {
             if(err) {
                 throw err
@@ -107,7 +107,7 @@ module.exports = {
         })
     },
 
-    getUserLanguagesName(req, res, next) {
+    getUserLanguagesName(req, res) {
         mysql.query('select lang_id from users_languages where user_id = ?', [global.userId], function(err, results) {
             if(err) {
                 throw err
@@ -137,49 +137,35 @@ module.exports = {
     },
 
     getFilteredUsers(req, res, next) {
-        // const filters = req.query
-        console.log(req.query);
-        const {filter} = req.query
-        const filtersId = []
+        const filters = req.body.filter.length > 1 ? req.body.filter : [req.body.filter]
         const filteredUsersId = new Set()
-        let filteredUsersIdObj = new Array()
+        const filteredUsersIdRes = []
 
-        if(filter !== undefined) {
-            filter.forEach(e => {
-                mysql.query('select id from interests where topic = ?', [e], (err, results) => {
-                    if(err) {
-                        throw err
-                    } else {
-                        filtersId.push(results[0].id)
-                    }
-                
-                filtersId.forEach((e,i) => {
-                    mysql.query('select user_id from users_interests where interest_id = ?', [e], (err, results) =>{
-                        if(err) {
-                            throw err
-                        } else {
-                            results.forEach(e => {
-                                if(e.user_id !== global.userId) {
-                                    filteredUsersId.add(e)
-                                    console.log(filteredUsersId);
-                                }
-                            })
-
-                            filteredUsersIdObj = [...filteredUsersId]
-
-                            if(i === filtersId.length - 1) {
-                                res.send(JSON.stringify(filteredUsersId))
-                            }
-                            
+        filters.forEach((e, i) => {
+            mysql.query('select user_id from users_interests where interest_id = ?', [e], (err, results) => {
+                if(err) {
+                    throw err 
+                } else {
+                    results.forEach(e => {
+                        if(e.user_id !== global.userId) {
+                            filteredUsersId.add(e.user_id)
                         }
                     })
-                })
-    
-                })
+
+                    Array.from(filteredUsersId).forEach(e => {
+                            filteredUsersIdRes.push({
+                                user_id: e
+                            })
+
+                    })
+                    
+                    if(i === filters.length - 1) {
+                        res.send(filteredUsersIdRes)
+                    }
+                }
             })
-        } else {
-            res.send(null)
-        }
+        })
+        
     }
 
 }

@@ -1,6 +1,6 @@
 module.exports = {
 
-    sendIndex(req, res, next) {
+    sendIndex(req, res) {
         if(global.userId === null) {
         res.sendFile("C:/Users/Spidey/Documents/projeto-integrador/smallTalk/frontend/pages/index.html")
         } else {
@@ -8,11 +8,11 @@ module.exports = {
         }
     },
 
-    sendRegister(req, res, next) {
+    sendRegister(req, res) {
             res.sendFile('C:/Users/Spidey/Documents/projeto-integrador/smallTalk/frontend/pages/register.html')
     },
 
-    sendProfile(req, res, next) {
+    sendProfile(req, res) {
         if(global.userId === null) {
             res.redirect('/index')
         } else {
@@ -20,7 +20,7 @@ module.exports = {
         }
     },
 
-    sendDiscover(req, res, next) {
+    sendDiscover(req, res) {
         if(global.userId === null) {
             res.redirect('/index')
         } else {
@@ -28,11 +28,15 @@ module.exports = {
         }
     },
 
-    sendFriends(req, res, next) {
+    sendFriends(req, res) {
         if(global.userId === null) {
             res.redirect('/index')
         } else {
             res.sendFile('C:/Users/Spidey/Documents/projeto-integrador/smallTalk/frontend/pages/friends.html')
         }
+    },
+
+    sendFilteredDiscover(req, res) {
+        res.sendFile("C:/Users/Spidey/Documents/projeto-integrador/smallTalk/frontend/pages/discover.html")
     }
 }

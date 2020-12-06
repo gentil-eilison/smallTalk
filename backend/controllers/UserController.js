@@ -162,7 +162,7 @@ module.exports = {
                         if(contains) {
                             mysql.query('delete from users_interests where interest_id = ? and user_id = ?', [e, userId])
                         } else {
-                            mysql.query('insert into users_interests(user_id, interest_id) values(?,?)', [userId, e])
+                            mysql.query('update users_interests set interest_id = ? where user_id = ?', [e, userId])
                         }
                    })
                 
@@ -171,7 +171,7 @@ module.exports = {
                     if(contains) {
                         mysql.query('delete from users_interests where interest_id = ? and user_id = ?', [req.body.inter, userId])
                     } else {
-                        mysql.query('insert into users_interests(user_id, interest_id) values(?,?)', [userId, req.body.inter])
+                        mysql.query('update users_interests set interest_id = ? where user_id = ?', [req.body.inter, userId])
                     }
                    
                 }

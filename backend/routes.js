@@ -7,6 +7,8 @@ const FrontController = require('./controllers/FrontController')
 
 // Page Controller
 
+router.get('/discover', PageController.sendDiscover)
+
 router.get('/index', PageController.sendIndex)
 
 router.get('/register', PageController.sendRegister)
@@ -14,8 +16,6 @@ router.get('/register', PageController.sendRegister)
 router.get('/profile', PageController.sendProfile)
 
 router.get('/friends', PageController.sendFriends)
-
-router.get('/discover', PageController.sendDiscover)
 
 // User Controller
 
@@ -57,7 +57,7 @@ router.get('/getUserLanguagesId', FrontController.getUserLanguagesId)
 
 router.get('/getUserLanguagesName', FrontController.getUserLanguagesName)
 
-router.get('/getFilteredUsers', FrontController.getFilteredUsers)
+router.post('/getFilteredUsers', FrontController.getFilteredUsers)
 
 module.exports = router
 

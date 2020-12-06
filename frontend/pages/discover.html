@@ -45,29 +45,29 @@
 
             <div class="filter-checkbox">
                 <h2>FILTROS</h2>
-                <form method="GET">
+                <form method="POST" id="filtros" action="/getFilteredUsers">
                     <div class="input-block">
                         <div>
-                            <input type="checkbox" name="filter" id="games" value="games">
+                            <input type="checkbox" name="filter" id="games" value="1">
                             <label for="games">Games</label>
                         </div>
                         <div>
-                            <input type="checkbox" name="filter" id="anime-manga" value="anime-manga">
+                            <input type="checkbox" name="filter" id="anime-manga" value="2">
                             <label for="anime-manga">Animes e Mangás</label>
                         </div>
 
                         <div>
-                            <input type="checkbox" name="filter" id="life" value="life">
+                            <input type="checkbox" name="filter" id="life" value="3">
                             <label for="life">Vida</label>
                         </div>
 
                         <div>
-                            <input type="checkbox" name="filter" id="health" value="health">
+                            <input type="checkbox" name="filter" id="health" value="4">
                             <label for="health">Saúde</label>
                         </div>
                     </div>
 
-                    <input type="submit" value="FILTRAR" formaction="/discover">
+                    <input type="submit" value="FILTRAR">
                 </form>
         </div>
             
@@ -75,7 +75,9 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="module" src="../js/discover.js"></script>
 </body>
 </html>
+

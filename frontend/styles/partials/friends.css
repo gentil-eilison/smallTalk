@@ -61,7 +61,7 @@ div[idioma] > img {
 }
 
 [friend] {
-    border: 1px solid black;
+    border: 3px solid #c4c4c4;
     background-color: #f0e4e4;
 }
 
@@ -75,9 +75,9 @@ div[idioma] > img {
     height: 2.5em;
 }
 
-[nickname], [f-lang] {  
+/*[nickname], [f-lang] {  
     border: 1px solid black;
-}
+}*/
 
 .botao-verde:hover {
     color: #FFF;
@@ -87,4 +87,8 @@ div[idioma] > img {
 .botao-vermelho:hover {
     color: #FFF;
     background: #a80a0a;
+}
+
+[link] {
+    border: 3px solid #c4c4c4;
 }

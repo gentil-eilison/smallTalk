@@ -5,7 +5,6 @@ export async function getInfoUsers(attr) {
                                 return data
                             })
                             .catch(error => console.log(error))
-    console.log(info)
     return info[`${attr}`]
 }
 
@@ -74,33 +73,14 @@ export async function getInfoUserLanguagesName() {
     return languagesNames
 }
 
-// export async function getInfoDiscoverFilters() {
-//     const filters = fetch('http://localhost:5005/discover')
-//                         .then(results => { 
-//                             console.log(results.text())
-//                             results.json()
-//                         })
-//                         .then(data => {
-//                             return data
-//                         })
-//                         .catch(error => {
-//                             console.log(error);
-//                         })
-
-//     return filters
+// export async function getInfoFilteredUsers() {
+//     const filteredUsers = fetch('http://localhost:5005/getFilteredUsers')
+//                             .then(results => results.json())
+//                             .then(data => {
+//                                 return data
+//                             })
+//                             .catch(error => {
+//                                 console.log(error);
+//                             })
+//     return filteredUsers
 // }
-
-export async function getInfoFilteredUsers() {
-    const url = `${window.location.href}`
-    console.log(url + 'teste');
-    const filteredUsersId = await fetch('http://localhost:5005/getFilteredUsers')
-                                    .then(results => results.json())
-                                    .then(data => {
-                                        return data
-                                    })
-                                    .catch(error => {
-                                        console.log(error);
-                                    })
-                                     
-    return filteredUsersId
-}
