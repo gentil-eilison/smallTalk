@@ -82,7 +82,7 @@
     justify-content: space-around;
 }
 
-.body-container .profile-item .footer input[type="submit"], .body-container .discover-area .friend-item .footer button {
+.body-container .profile-item .footer input[type="submit"], .body-container .discover-area .friend-item .footer form input {
     width: 120px;
     height: 40px;
 
@@ -97,21 +97,21 @@
     cursor: pointer;
 }
 
-.body-container .profile-item .footer .profile-button, .body-container .discover-area .friend-item .profile-button {
+.body-container .profile-item .footer .profile-button, .body-container .discover-area .friend-item form .profile-button {
     background: var(--color-secondary-background);
 
     transition: background 0.2s;
 }
 
-.body-container .profile-item .footer .profile-button:hover {
+.body-container .profile-item .footer form .profile-button:hover {
     background: #107972;
 }
 
-.body-container .discover-area .friend-item .footer .profile-button:hover {
+.body-container .discover-area .friend-item .footer form .profile-button:hover {
     background: #107972;
 }
 
-.body-container .profile-item .footer .logout-button, .body-container .discover-area .friend-item .footer .add-button {
+.body-container .profile-item .footer .logout-button, .body-container .discover-area .friend-item .footer form .add-button {
     background: var(--color-button-secondary);
 
     transition: background 0.2s;
@@ -121,7 +121,7 @@
     background: #a30c0c;
 }
 
-.body-container .discover-area .friend-item .footer .add-button:hover {
+.body-container .discover-area .friend-item .footer form .add-button:hover {
     background: #a30c0c;
 }
 

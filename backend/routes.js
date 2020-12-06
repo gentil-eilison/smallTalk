@@ -29,6 +29,8 @@ router.post('/registerInterest', UserController.registerInterest)
 
 router.get('/removeLanguages', UserController.removeLanguges)
 
+router.post('/addFriend', UserController.addFriend)
+
     // Profile Page
 
 router.post('/saveBio', UserController.saveBio)

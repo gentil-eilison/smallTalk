@@ -194,6 +194,35 @@ module.exports = {
         }
 
         res.redirect('/profile')
+    },
+    // Discover Page 
+    addFriend(req, res, next) { 
+        mysql.query('select id from is_friends_with where (user1_id = ? or user1_id = ?) and (user2_id = ? or user2_id = ?)', [userId, req.body.id, userId, req.body.id], (err, results) => {
+            if(err) {
+                throw err 
+            } else {
+                if(results.length > 0) {
+                    mysql.query('delete from is_friends_with where id = ?', [results[0].id], (err, results) => {
+                        if(err) {
+                            console.log('Could not delete friend')
+                            throw err
+                        } else {
+                            console.log('Friend successfully deleted.')
+                            res.redirect('/discover')
+                        }
+                    })
+                } else {
+                    mysql.query('insert into is_friends_with(user1_id, user2_id) values(?,?)', [userId, req.body.id], (err, results) => {
+                        if(err) {
+                            console.log('Could not add this friend.')
+                            throw err 
+                        } else {
+                            console.log('Friend added successfully.')
+                            res.redirect('/discover')
+                        }
+                    })
+                }
+            }
+        })
     }
-    // Discover Page  
 }

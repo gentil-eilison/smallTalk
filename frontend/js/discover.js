@@ -42,13 +42,15 @@ async function updateDiscoverArea() {
         }      
     
         $(`.discover-area .friend-item[id=${e.id}]`).append('<div class="footer"></div>')
-        $(`.discover-area .friend-item[id=${e.id}] .footer`).append('<button class="profile-button">')
-        $(`.discover-area .friend-item[id=${e.id}] .footer`).append('<button class="add-button">')
+        $(`.discover-area .friend-item[id=${e.id}] .footer`).append('<form method="POST">').append('</form>')
+        $(`.discover-area .friend-item[id=${e.id}] .footer form`).append(`<input type="hidden" name="id" value="${e.id}">`)
+        $(`.discover-area .friend-item[id=${e.id}] .footer form`).append('<input type="submit" class="profile-button" formaction="/discover/:id" value="Perfil">')
+        $(`.discover-area .friend-item[id=${e.id}] .footer form`).append('<input type="submit" class="add-button" formaction="/addFriend" value="Adicionar">')
             
         $(`.discover-area .friend-item[id=${e.id}] .heading .title img`).attr('src', `/img/${profile_pic}`)
         $(`.discover-area .friend-item[id=${e.id}] .heading .title span`).text(e.user_name)
-        $(`.discover-area .friend-item .footer .profile-button`).text('Visualizar')
-        $(`.discover-area .friend-item .footer .add-button`).text('Adicionar')
+        // $(`.discover-area .friend-item .footer .profile-button`).text('Visualizar')
+        // $(`.discover-area .friend-item .footer .add-button`).text('Adicionar')
 
             
         })        
