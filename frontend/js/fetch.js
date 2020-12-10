@@ -73,14 +73,12 @@ export async function getInfoUserLanguagesName() {
     return languagesNames
 }
 
-// export async function getInfoFilteredUsers() {
-//     const filteredUsers = fetch('http://localhost:5005/getFilteredUsers')
-//                             .then(results => results.json())
-//                             .then(data => {
-//                                 return data
-//                             })
-//                             .catch(error => {
-//                                 console.log(error);
-//                             })
-//     return filteredUsers
-// }
+export async function getInfoUserFriends() {
+    const userFriends = fetch('http://localhost:5005/getUserFriends')
+                            .then(results => results.json())
+                            .then(data => {
+                                return data 
+                            })
+                            .catch(err => console.log(err))
+    return userFriends
+}

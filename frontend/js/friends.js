@@ -1,4 +1,9 @@
-import { getInfoUsers, getInfoSrcUsersLanguages } from './fetch.js'
+import { getInfoUsers, getInfoSrcUsersLanguages, getInfoUserFriends } from './fetch.js'
+
+async function updateFriends() {
+    const userFriends = await getInfoUserFriends()
+    console.log(userFriends)
+}
 
 async function updateScreen() {
     $('[icon]').attr('src', `/img/${await getInfoUsers('src')}`)
@@ -18,8 +23,9 @@ async function updateScreen() {
 
     })
 
-
+    updateFriends()
 }
 
 
 updateScreen()
+

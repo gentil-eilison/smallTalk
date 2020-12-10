@@ -166,6 +166,65 @@ module.exports = {
             })
         })
         
+    },
+
+    getUserFriends(req, res, next) {
+        let friends = []
+        mysql.query('select id from is_friends_with where user1_id = ? or user2_id = ?', [global.userId, global.userId], (err, results) => {
+            if (err) {
+                throw err 
+            } else {
+                const friendshipId = results
+
+                friendshipId.forEach((e, i) => {
+                    mysql.query('select user1_id, user2_id from is_friends_with where id = ?', [e], (err, results) => {
+                        if (err) {
+                            throw err 
+                        } else {
+                            results.forEach((e, i) => {
+                                if(e.user1_id != global.userId) {
+                                    friends.push(e.user1_id) 
+                                } else {
+                                    friends.push(e.user2_id)
+                                }
+                            })
+
+                            let friendsUserData = []
+                            let friendsLanguage = []
+                            if(i == friendshipId.length - 1) {
+                                friends.forEach((e, i) => {
+                                    mysql.query('select user_name, src from users where id = ?', [e], (err, results) => {
+                                        if (err) {
+                                            throw err 
+                                        } else {
+                                                friendsUserData.push(results[0])
+
+                                            mysql.query('select lang_id from users_languages where user_id = ?', [e], (err, results) => {
+                                                if (err) {
+                                                    throw err 
+                                                } else {
+                                                    if(i == friendshipId.length-1) {
+                                                        friendsLanguage.push(results)
+                                                        res.send([friendsUserData, friendsLanguage])
+                                                    } else {
+                                                        friendsLanguage.push(results)
+                                                    }
+                                                }
+                                            })
+                                        }
+                                        
+
+                                    })
+
+                                    
+                                })
+                            }
+
+                        }
+                    })
+                })
+            }
+        })
     }
 
 }
