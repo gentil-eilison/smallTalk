@@ -176,9 +176,8 @@ module.exports = {
                 throw err
             } else {
                 const friendshipId = results
-
                 friendshipId.forEach((e, i) => {
-                    mysql.query('select user1_id, user2_id from is_friends_with where id = ?', [e], (err, results) => {
+                    mysql.query('select user1_id, user2_id from is_friends_with where id = ?', [e.id], (err, results) => {
                         if (err) {
                             throw err
                         } else {
@@ -189,35 +188,46 @@ module.exports = {
                                     friends.push({ id: e.user2_id })
                                 }
                             })
-
+                            
                             if (i == friendshipId.length - 1) {
                                 friends.forEach((e ,i1) => {
                                     mysql.query('select lang_id,user_id from users_languages where user_id = ?', [e.id], (err, results1) => {
                                         if (err) {
                                             throw err
                                         } else {
-                                            results1.forEach((elem) => {
-                                                mysql.query('select src from languages where id = ?', [elem.lang_id], (err, results2) => {
-                                                    if (err) {
-                                                        throw err
-                                                    } else {
-                                                        results2.forEach((el) => {
-                                                            if (elem.user_id == e.id) {
-                                                                    e[`lang_${elem.lang_id}`] = el.src
+                                            mysql.query('select user_name,src from users where id = ?', [e.id], (err, results3) => {
+                                                if(err) {
+                                                    throw err
+                                                } else {
+                                                    results3.forEach((e2, i2) => {
+                                                        e['user_name'] = e2.user_name 
+                                                        e['user_src'] = e2.src
+                                                    })
+                                                    e['src'] = []
+                                                    results1.forEach((elem) => {
+                                                        mysql.query('select src from languages where id = ?', [elem.lang_id], (err, results2) => {
+                                                            if (err) {
+                                                                throw err
+                                                            } else {
+                                                                results2.forEach((el) => {
+                                                                    if (elem.user_id == e.id) {
+                                                                            //e[`lang_${elem.lang_id}`] = el.src
+                                                                            e['src'].push(el.src)
+                                                                    }
+                                                                })
+                                                                    if(i1 == friends.length-1) {
+                                                                        counter++
+                                                                    }
+        
+                                                                    if(counter == 2) {
+                                                                        res.send(friends)
+                                                                    }   
                                                             }
                                                         })
-                                                        if(i1 == friends.length-1) {
-                                                            counter++
-                                                        }
-
-                                                        if(counter == friends.length) {
-                                                            res.send(friends)
-                                                        }
-                                                        
-                                                    }
-                                                })
-                                       
-                                            })     
+                                               
+                                                    })  
+                                                }
+                                            })  
                                         }
                                     })
                                 })
