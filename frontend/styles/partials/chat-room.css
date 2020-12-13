@@ -1,0 +1,13 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0px;
+}
+
+#chat-container {
+    height: inherit;
+    background-color: #f5eded;
+}

@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-
 const PageController = require('./controllers/PageController')
 const UserController = require('./controllers/UserController')
 const FrontController = require('./controllers/FrontController')
