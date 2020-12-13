@@ -195,8 +195,9 @@ module.exports = {
 
         res.redirect('/profile')
     },
+
     // Discover Page 
-    addFriend(req, res, next) { 
+    addFriend(req, res) { 
         mysql.query('select id from is_friends_with where (user1_id = ? or user1_id = ?) and (user2_id = ? or user2_id = ?)', [userId, req.body.id, userId, req.body.id], (err, results) => {
             if(err) {
                 throw err 
@@ -222,6 +223,38 @@ module.exports = {
                         }
                     })
                 }
+            }
+        })
+    },
+
+    viewUserProfile(req, res, next) {
+        const userId = req.params.id 
+
+        mysql.query('select users.id, bio, src, user_name, interest_id from users, users_interests where users.id = ? and users_interests.user_id = ?', [userId, userId], function(err, results) {
+            if(err) {
+                throw err 
+            } else {
+                res.locals.results = results 
+                next()
+            }
+        })
+    },
+
+    getUsersLanguages(req, res, next) {
+        const previousResult = req.res.locals.results[0]
+        const langIds = {
+            lang_ids: []
+        }
+        let finalResult = {}
+
+        mysql.query('select lang_id from users_languages where user_id = ?', [previousResult.id], function(err, results) {
+            if(err) {
+                throw err
+            } else {
+                langIds.lang_ids = [...results]
+                finalResult = Object.assign(langIds, previousResult)
+
+                res.send(finalResult)
             }
         })
     }

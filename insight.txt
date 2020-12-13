@@ -1,0 +1,4 @@
+Pra fazer a página de cada amigo,
+no arquivo 'profile.js', adiciona-se uma verificação para ver se a url tem um id
+Se tiver, busca os dados do UserController e carrega as coisas dele
+Se não tiver, carrega-se normalmente

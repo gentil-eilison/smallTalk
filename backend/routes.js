@@ -13,6 +13,10 @@ router.get('/index', PageController.sendIndex)
 
 router.get('/register', PageController.sendRegister)
 
+router.use('/profile/:id', UserController.viewUserProfile)
+
+router.post('/profile/:id', UserController.getUsersLanguages)
+
 router.get('/profile', PageController.sendProfile)
 
 router.get('/friends', PageController.sendFriends)
@@ -31,7 +35,8 @@ router.get('/removeLanguages', UserController.removeLanguges)
 
 router.post('/addFriend', UserController.addFriend)
 
-    // Profile Page
+
+// Profile Page
 
 router.post('/saveBio', UserController.saveBio)
 

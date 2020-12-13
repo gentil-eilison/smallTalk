@@ -1,4 +1,9 @@
+// imports do fetch API
+
 import {getInfoUsers, getInfoNotLoggedUsers, getInfoSrcUsersLanguages, getInfoNotLoggedUsersLanguages} from './fetch.js'
+
+
+// Funções próprias para buscar dados dos usuários
 
 async function updateUserLanguages() {
     const languages = await getInfoSrcUsersLanguages()
@@ -7,6 +12,9 @@ async function updateUserLanguages() {
         $('.body-container .profile-item .heading .languages').append(`<img src="${e.src}" alt="france-flag" width="50px" height="50px">`)
     })
 }
+
+
+// Funções para atualizar a página
 
 async function updateDiscoverArea() {
     const notLoggedUsers = await getInfoNotLoggedUsers()
@@ -44,15 +52,12 @@ async function updateDiscoverArea() {
         $(`.discover-area .friend-item[id=${e.id}]`).append('<div class="footer"></div>')
         $(`.discover-area .friend-item[id=${e.id}] .footer`).append('<form method="POST">').append('</form>')
         $(`.discover-area .friend-item[id=${e.id}] .footer form`).append(`<input type="hidden" name="id" value="${e.id}">`)
-        $(`.discover-area .friend-item[id=${e.id}] .footer form`).append('<input type="submit" class="profile-button" formaction="/discover/:id" value="Perfil">')
+        $(`.discover-area .friend-item[id=${e.id}] .footer form`).append(`<input type="submit" class="profile-button" formaction="/profile/${e.id}" value="Perfil">`)
         $(`.discover-area .friend-item[id=${e.id}] .footer form`).append('<input type="submit" class="add-button" formaction="/addFriend" value="Adicionar">')
             
         $(`.discover-area .friend-item[id=${e.id}] .heading .title img`).attr('src', `/img/${profile_pic}`)
         $(`.discover-area .friend-item[id=${e.id}] .heading .title span`).text(e.user_name)
-        // $(`.discover-area .friend-item .footer .profile-button`).text('Visualizar')
-        // $(`.discover-area .friend-item .footer .add-button`).text('Adicionar')
 
-            
         })        
 }
 
@@ -68,8 +73,8 @@ async function updateScreen() {
 
 }
 
-updateScreen()
 
+// Esconder os usuários não selecionados
 
 $('#filtros').submit(function(e) {
     e.preventDefault()
@@ -81,13 +86,6 @@ $('#filtros').submit(function(e) {
     $.post(url, data, function(res) {
             const ids = Array.from(document.querySelectorAll('.friend-item'))
             const results = []
-
-            // res.forEach(e => {
-            //     console.log(e.user_id);
-            // })
-            // ids.forEach(element => {
-            //     console.log(element.id);
-            // })
 
             res.forEach(e => {
                 ids.forEach(element => {
@@ -109,4 +107,9 @@ $('#filtros').submit(function(e) {
     })
 
 })
+
+
+// Chamada de funções
+
+updateScreen()
 
