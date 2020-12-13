@@ -68,5 +68,6 @@ router.post('/getFilteredUsers', FrontController.getFilteredUsers)
 
 router.get('/getUserFriends', FrontController.getUserFriends)
 
+
 module.exports = router
 
