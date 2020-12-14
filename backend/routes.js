@@ -12,9 +12,13 @@ router.get('/index', PageController.sendIndex)
 
 router.get('/register', PageController.sendRegister)
 
-router.use('/profile/:id', UserController.viewUserProfile)
+router.use('/profile/:id', UserController.getSimpleProfileInfo)
 
-router.post('/profile/:id', UserController.getUsersLanguages)
+router.get('/profile/:id', UserController.getInterestsProfileInfo)
+
+router.get('/profile/:id', UserController.getFinalProfileInfo)
+
+router.post('/friendProfile/:id', PageController.sendProfile)
 
 router.get('/profile', PageController.sendProfile)
 

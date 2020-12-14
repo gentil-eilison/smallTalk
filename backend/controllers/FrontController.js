@@ -3,7 +3,11 @@ const mysql = require('../config')
 module.exports = {
     getLoggedUser(req, res) {
         mysql.query('select * from users where id = ?', [global.userId], function (err, results) {
-            res.send(results[0])
+            if(err) {
+                throw err 
+            } else {
+                res.send(results[0])
+            }
         })
     },
 

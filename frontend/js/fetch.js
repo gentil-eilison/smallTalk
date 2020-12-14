@@ -82,3 +82,28 @@ export async function getInfoUserFriends() {
                             .catch(err => console.log(err))
     return userFriends
 }
+
+export async function getInfoFriendProfile() {
+    const url = window.location.href 
+    const newUrl = url.split('/')
+    let finalUrl = ""
+
+    newUrl[3] = "profile"
+
+    newUrl.forEach((e, i) => {
+        if(i === newUrl.length - 1) {
+            finalUrl += e
+        } else {
+            finalUrl += e + "/"
+        }
+        
+    })
+
+    const friendProfileInfo = await fetch(finalUrl)
+                                .then(res => res.json())
+                                .then(data => {
+                                    return data
+                                })
+
+    return friendProfileInfo
+}
