@@ -229,34 +229,74 @@ module.exports = {
         })
     },
 
-    viewUserProfile(req, res, next) {
+    getSimpleProfileInfo(req, res, next) {
         const userId = req.params.id 
 
-        mysql.query('select users.id, bio, src, user_name, interest_id from users, users_interests where users.id = ? and users_interests.user_id = ?', [userId, userId], function(err, results) {
+        mysql.query('select id, user_name, bio, src as img_src from users where id = ?', [userId], function(err ,results) {
             if(err) {
-                throw err 
+                throw err
             } else {
-                res.locals.results = results 
+                res.locals.simpleInfo = results 
                 next()
             }
         })
     },
 
-    getUsersLanguages(req, res, next) {
-        const previousResult = req.res.locals.results[0]
-        const langIds = {
-            lang_ids: []
-        }
-        let finalResult = {}
+    getInterestsProfileInfo(req, res, next) {
+        const simpleInfo = req.res.locals.simpleInfo
+        let complexInfo = []
 
-        mysql.query('select lang_id from users_languages where user_id = ?', [previousResult.id], function(err, results) {
+        mysql.query('select interest_id from users_interests where user_id = ?', [simpleInfo[0].id], function(err, results) {
             if(err) {
                 throw err
             } else {
-                langIds.lang_ids = [...results]
-                finalResult = Object.assign(langIds, previousResult)
+                const interest_ids = []
 
-                res.send(finalResult)
+                Array.from(results).forEach(e => {
+                    interest_ids.push(e.interest_id)
+                })
+
+                complexInfo = [...simpleInfo]
+                complexInfo[0]['interests_id'] = interest_ids
+                
+                res.locals.complexInterestInfo = complexInfo
+                next()
+            }
+        })
+    },
+
+    getFinalProfileInfo(req, res, next) {
+        const complexInterestInfo = req.res.locals.complexInterestInfo
+        const user_id = complexInterestInfo[0].id
+        let finalProfile = []
+        const languages_ids = []
+        const languages_src = []
+
+        mysql.query('select lang_id from users_languages where user_id = ?', [user_id], function(err, results) {
+            if(err) {
+                throw err 
+            } else {
+                Array.from(results).forEach(e => {
+                    languages_ids.push(e.lang_id)
+                })
+
+                languages_ids.forEach((e, i) => {
+                    mysql.query('select src as lang_src from languages where id = ?', [e], function(err, results) {
+                        if(err) {
+                            throw err 
+                        } else {
+                            languages_src.push(results[0].lang_src)
+
+                            if(i === languages_ids.length - 1) {
+                                finalProfile = [...complexInterestInfo]
+                                finalProfile[0]['langs_src'] = languages_src
+                                res.send(finalProfile[0])
+                            }
+                        }
+                    })
+                    
+                })
+
             }
         })
     }

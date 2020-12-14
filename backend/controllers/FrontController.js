@@ -5,7 +5,11 @@ const { v4: uuidV4 } = require('uuid')
 module.exports = {
     getLoggedUser(req, res) {
         mysql.query('select * from users where id = ?', [global.userId], function (err, results) {
-            res.send(results[0])
+            if(err) {
+                throw err 
+            } else {
+                res.send(results[0])
+            }
         })
     },
 

@@ -1,4 +1,4 @@
-import {getInfoUsers, getInfoSrcUsersLanguages, getInfoUserInterests, getInfoUserLanguagesId, getInfoUserLanguagesName} from './fetch.js'
+import {getInfoUsers, getInfoSrcUsersLanguages, getInfoUserInterests, getInfoUserLanguagesId, getInfoUserLanguagesName, getInfoFriendProfile} from './fetch.js'
 
 // let clicked = false 
 
@@ -21,15 +21,36 @@ import {getInfoUsers, getInfoSrcUsersLanguages, getInfoUserInterests, getInfoUse
 // Functions 
 
 async function updateScreen() {
-    let interests = await getInfoUserInterests()
-    console.log(interests)
-    $('[nome]').text(await getInfoUsers('user_name'))
-    $('textarea').text(await getInfoUsers('bio'))
-    $('[icon]').attr('src', `/img/${await getInfoUsers('src')}`)
-    interests.forEach((e, i) => {
-        $(`label[interest][for="${e.interest_id}"]`).toggleClass('interested')
-    })
 
+    const isFriendProfile = window.location.href.indexOf('friendProfile') != -1 ? true : false
+
+        if(isFriendProfile) {
+            const friendProfileInfo = await getInfoFriendProfile()
+    
+            $('[nome]').text(friendProfileInfo.user_name)
+            $('textarea').text(friendProfileInfo.bio)
+            $('[icon]').attr('src', `/img/${friendProfileInfo.img_src}`)
+            friendProfileInfo.interests_id.forEach((e, i) => {
+                $(`label[interest][for="${e}"]`).toggleClass('interested')
+            })
+        } else {
+            let interests = await getInfoUserInterests()
+            const userInfo = {
+                user_name: await getInfoUsers('user_name'),
+                bio: await getInfoUsers('bio'),
+                icon: await getInfoUsers('src'),
+                interests: [
+                    interests
+                ]
+            }
+    
+            $('[nome]').text(userInfo.user_name)
+            $('textarea').text(userInfo.bio)
+            $('[icon]').attr('src', `/img/${userInfo.icon}`)
+            userInfo.interests.forEach((e, i) => {
+                $(`label[interest][for="${e.interest_id}"]`).toggleClass('interested')
+            })
+        }
     
 }   
 
