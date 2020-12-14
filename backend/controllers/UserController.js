@@ -145,35 +145,37 @@ module.exports = {
             } else {
                 let interests = []
                 results.forEach((e, i) => {
-                    interests.push(e.interest_id)
+                    interests.push(String(e.interest_id))   // funcionando: traz um array com interesses do usuário
                 })
 
-                if(interests.length == 0 && req.body.inter.length > 1) {
-                    req.body.inter.forEach(e => {
+                const selectedInterests = [...req.body.inter] // funcionando: faz um array com os itens do form
+
+                if(interests.length == 0 && selectedInterests.length > 1) {
+                    selectedInterests.forEach(e => {
                         mysql.query('insert into users_interests(user_id, interest_id) values(?,?)', [userId, e])
                     })
-                }else if(interests.length == 0 && req.body.inter.length == 1) {
-                        mysql.query('insert into users_interests(user_id, interest_id) values(?,?)', [userId, req.body.inter])
+                }else if(interests.length == 0 && selectedInterests.length == 1) {
+                        mysql.query('insert into users_interests(user_id, interest_id) values(?,?)', [userId, selectedInterests])
 
-                } else if(interests.length >= 1 && req.body.inter.length > 1) {
-                    // atualizar/excluir
-                   req.body.inter.forEach((e, i) => {
-                    let contains = interests.indexOf(e) != -1 ? true : false
-                        if(contains) {
-                            mysql.query('delete from users_interests where interest_id = ? and user_id = ?', [e, userId])
-                        } else {
-                            mysql.query('update users_interests set interest_id = ? where user_id = ?', [e, userId])
-                        }
-                   })
-                
-                } else if (interests.length >= 1 && req.body.inter.length == 1) {
-                    const contains = interests.indexOf(req.body.inter) != -1 ? true : false
-                    if(contains) {
-                        mysql.query('delete from users_interests where interest_id = ? and user_id = ?', [req.body.inter, userId])
-                    } else {
-                        mysql.query('update users_interests set interest_id = ? where user_id = ?', [req.body.inter, userId])
-                    }
-                   
+                } else if(interests.length >= 1 && selectedInterests.length > 1) {
+                      selectedInterests.forEach((e, i) => {
+                      let contains = interests.indexOf(e) != -1 ? true : false
+
+                         if(contains) {
+                             mysql.query('delete from users_interests where interest_id = ? and user_id = ?', [e, userId])
+                         } else {
+                             mysql.query('insert into users_interests(interest_id, user_id) values(?, ?)', [e, userId])
+                         }
+                    })
+                } else if (interests.length >= 1 && selectedInterests.length == 1) {
+                            const contains = interests.indexOf(selectedInterests[0]) != -1 ? true : false
+                            const selectedInterest = selectedInterests[0] 
+
+                            if(contains) {
+                                mysql.query('delete from users_interests where interest_id = ? and user_id = ?', [selectedInterest, userId])
+                            } else {
+                                mysql.query('insert into users_interests(interest_id, user_id) values(?, ?)', [selectedInterest, userId])
+                            }
                 }
 
                 res.redirect('/profile')
