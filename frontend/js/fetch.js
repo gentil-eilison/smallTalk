@@ -82,3 +82,13 @@ export async function getInfoUserFriends() {
                             .catch(err => console.log(err))
     return userFriends
 }
+
+export async function getKeys() {
+    const keys = fetch('http://localhost:5005/getKeys')
+                     .then(results => results.json())
+                     .then(data => {
+                         return data 
+                     })
+                     .catch(err => console.log(err))
+    return keys 
+}

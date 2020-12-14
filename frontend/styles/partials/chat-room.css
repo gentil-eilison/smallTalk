@@ -7,7 +7,18 @@ body {
     margin: 0px;
 }
 
-#chat-container {
+.container-fluid {
     height: inherit;
-    background-color: #f5eded;
+    background-color: #f0e4e4;
+}
+
+[for="sair"] > img:hover {
+    cursor: pointer;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+[for="sair"] {
+    width: 06em;
+    height: 06em;
 }

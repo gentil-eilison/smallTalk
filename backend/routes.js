@@ -67,6 +67,11 @@ router.post('/getFilteredUsers', FrontController.getFilteredUsers)
 
 router.get('/getUserFriends', FrontController.getUserFriends)
 
+router.post('/createLink', FrontController.createLink)
+
+router.get('/getKeys', FrontController.getKeys)
+
+//router.get(':room', FrontController.prepareRoom)
 
 module.exports = router
 

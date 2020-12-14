@@ -1,4 +1,6 @@
 const mysql = require('../config')
+const io = require('../server')
+const { v4: uuidV4 } = require('uuid')
 
 module.exports = {
     getLoggedUser(req, res) {
@@ -241,5 +243,95 @@ module.exports = {
         })
     },
 
+    createLink(req, res, next) {
+        let chatters = {user: null, friend: null, id: uuidV4()}
+        mysql.query('select id from users where id = ?', [global.userId], (err, results) => {
+            if(err) {
+                throw err 
+            } else {
+                results.forEach((e,i) => {
+                    chatters.user = e.id
+                })
+
+                mysql.query('select id from users where id = ?', [req.body.friendId], (err, results) => {
+                    if(err) {
+                        throw err 
+                    } else {
+                        results.forEach((e, i) => {
+                            chatters.friend = e.id 
+                        })
+
+                        mysql.query('select id from meetings_users where (participant1_id = ? or participant2_id = ?) and (participant2_id = ? or participant2_id = ?)', [chatters.user, chatters.friend, chatters.user, chatters.friend], (err, results) => {
+                            if(err) {
+                                throw err 
+                            } else {
+                                if(results.length == 0) {
+                                    mysql.query('insert into meetings(room_key) values(?)', [chatters.id], (err) => {
+                                        if(err) {
+                                            throw err 
+                                        } else {
+                                            mysql.query('select id from meetings where room_key = ?', [chatters.id], (err, results) => {
+                                                if(err) {
+                                                    throw err 
+                                                } else {
+                                                    mysql.query('insert into meetings_users(participant1_id, participant2_id, room_key) values(?,?,?)', [chatters.user, chatters.friend, results[0].id], (err) => {
+                                                        if(err) {
+                                                            console.log('Não foi possível registrar a sala.')
+                                                            throw err 
+                                                        } else {
+                                                            console.log("Sala registrada com sucesso.")
+                                                            res.redirect('/friends')
+                                                        }
+                                                    })
+                                                }
+                                            })
+                                        }
+                                    })
+                                } else {
+                                    mysql.query('update meetings set room_key = ? where id = ?', [chatters.id, results[0].id], (err, results) => {
+                                        if(err) {
+                                            console.log('Houve um erro ao atualizar a chave.')
+                                            throw err 
+                                        } else {
+                                            console.log('Chave atualizada com sucesso.')
+                                            res.redirect('/friends')
+                                        }
+                                    })
+                                } 
+                            }
+                        })
+                    }
+                })
+                
+            }
+        })
+    },
+
+    getKeys(req, res, next) {
+        let keys = []
+        mysql.query('select room_key from meetings_users where (participant1_id = ? or participant2_id = ?)', [global.userId, global.userId], (err, results1) => {
+            if(err) {
+                throw err 
+            } else {
+                results1.forEach((e,i) => {
+                    mysql.query('select room_key from meetings where id = ?', [e.room_key], (err, results) => {
+                        if(err) {
+                            throw err 
+                        } else {
+                            results.forEach((e,i) => {
+                                keys.push(e.room_key)
+                            })
+
+                            console.log(keys)
+
+                            if(i == results1.length-1) {
+                                res.send(keys)
+                            }
+                        }
+                    })
+                })
+            }
+        })
+    }
 
 }
