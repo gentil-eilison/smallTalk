@@ -354,39 +354,8 @@ module.exports = {
         })
     },
 
-    getMailInfo(req, res, next) {
-        const emails = {user1: null, user2: null}
-        mysql.query('select id from meetings where room_key = ?', [req.body.chatLink], (err, results) => {
-            if(err) {
-                throw err 
-            } else {
-                mysql.query('select participant1_id, participant2_id from meetings_users where room_key = ?', [results[0].id], (err, results) => {
-                    if(err) {
-                        throw err 
-                    } else {
-                        mysql.query('select email from users where id = ?', [results[0].participant1_id], (err, results) => {
-                            if(err) {
-                                throw err 
-                            } else {
-                                emails.user1 = results[0].email
-                            }
-                        })
-
-                        mysql.query('select email from users where id = ?', [results[0].participant2_id], (err, results) => {
-                            if(err) {
-                                throw err 
-                            } else {
-                                emails.user2 = results[0].email
-                                
-                                res.send(emails)
-                            }
-                        })
-
-                        
-                    }
-                })
-            }
-        })
+    sendMail(req, res, next) {
+        res.send(req.body.data)
     }
 
 }
