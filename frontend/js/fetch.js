@@ -91,6 +91,8 @@ export async function getKeys() {
                      })
                      .catch(err => console.log(err))
     return keys 
+}
+
 export async function getInfoFriendProfile() {
     const url = window.location.href 
     const newUrl = url.split('/')
@@ -107,11 +109,21 @@ export async function getInfoFriendProfile() {
         
     })
 
-    const friendProfileInfo = await fetch(finalUrl)
+    const friendProfileInfo = await fetch(finalUrl) 
                                 .then(res => res.json())
                                 .then(data => {
                                     return data
                                 })
 
     return friendProfileInfo
+}
+
+export async function getChattersEmail() {
+    const emails = fetch('http://localhost:5005/getMailInfo')
+                       .then(res => res.json())
+                       .then(data => {
+                           return data 
+                       })
+                       .catch(err => console.log(err))
+    return emails
 }

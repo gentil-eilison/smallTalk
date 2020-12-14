@@ -75,6 +75,8 @@ router.post('/createLink', FrontController.createLink)
 
 router.get('/getKeys', FrontController.getKeys)
 
+router.get('/getMailInfo', FrontController.getMailInfo)
+
 //router.get(':room', FrontController.prepareRoom)
 
 module.exports = router

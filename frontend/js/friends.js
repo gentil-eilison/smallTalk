@@ -4,7 +4,7 @@ async function updateLinks() {
     const links = await getKeys()
     console.log(links)
     links.forEach(function(e, i) {
-        $('.links-container').append(`<div class="container-fluid mx-auto col-9 my-4 rounded" link>${e}</div>`)
+        $('.links-container').append(`<div class="container-fluid mx-auto col-9 my-4 rounded"><form method="POST"><label style="border: 3px solid #c4c4c4;" class="px-1 py-1 rounded" for="link">${e.room_key}</label><input type="submit" id="link" name="chatLink" value="${e.room_key}" style="display: none;" formaction="/getMailInfo"></form></div>`)
     })
 }
 
@@ -48,7 +48,6 @@ async function updateScreen() {
 
     })
 }
-
 
 updateScreen()
 updateFriends()

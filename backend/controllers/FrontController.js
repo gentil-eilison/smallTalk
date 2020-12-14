@@ -313,26 +313,77 @@ module.exports = {
 
     getKeys(req, res, next) {
         let keys = []
-        mysql.query('select room_key from meetings_users where (participant1_id = ? or participant2_id = ?)', [global.userId, global.userId], (err, results1) => {
+        mysql.query('select room_key, participant1_id, participant2_id from meetings_users where (participant1_id = ? or participant2_id = ?)', [global.userId, global.userId], (err, results1) => {
             if(err) {
                 throw err 
             } else {
-                results1.forEach((e,i) => {
+                results1.forEach((e,i2) => {
+                    keys.push({})
                     mysql.query('select room_key from meetings where id = ?', [e.room_key], (err, results) => {
                         if(err) {
                             throw err 
                         } else {
-                            results.forEach((e,i) => {
-                                keys.push(e.room_key)
+                            results.forEach((e2,i) => {
+                                keys[i2]['room_key'] = e2.room_key 
+
+                                mysql.query('select email from users where id = ?', [e.participant1_id], (err, results3) => {
+                                    if(err) {
+                                        throw err 
+                                    } else {
+                                        keys[i2]['user1_email'] = results3[0].email
+                                    }
+                                })
+
+                                mysql.query('select email from users where id = ?', [e.participant2_id], (err, results4) => {
+                                    if(err) {
+                                        throw err 
+                                    } else {
+                                        keys[i2]['user2_email'] = results4[0].email
+
+                                        if(i2 == results1.length-1) {
+                                            res.send(keys)
+                                        }
+                                    }
+                                })
                             })
-
-                            console.log(keys)
-
-                            if(i == results1.length-1) {
-                                res.send(keys)
-                            }
                         }
                     })
+                })
+                
+            }
+        })
+    },
+
+    getMailInfo(req, res, next) {
+        const emails = {user1: null, user2: null}
+        mysql.query('select id from meetings where room_key = ?', [req.body.chatLink], (err, results) => {
+            if(err) {
+                throw err 
+            } else {
+                mysql.query('select participant1_id, participant2_id from meetings_users where room_key = ?', [results[0].id], (err, results) => {
+                    if(err) {
+                        throw err 
+                    } else {
+                        mysql.query('select email from users where id = ?', [results[0].participant1_id], (err, results) => {
+                            if(err) {
+                                throw err 
+                            } else {
+                                emails.user1 = results[0].email
+                            }
+                        })
+
+                        mysql.query('select email from users where id = ?', [results[0].participant2_id], (err, results) => {
+                            if(err) {
+                                throw err 
+                            } else {
+                                emails.user2 = results[0].email
+                                
+                                res.send(emails)
+                            }
+                        })
+
+                        
+                    }
                 })
             }
         })

@@ -84,10 +84,6 @@ div[idioma] > img {
     background: #a80a0a;
 }
 
-[link] {
-    border: 3px solid #c4c4c4;
-}
-
 [friend-icon] > img {
     max-width: 100%;
     max-height: 100%;
@@ -104,3 +100,6 @@ div[idioma] > img {
     max-height: 100%;
 }
 
+[for="link"] {
+    cursor: pointer;
+}
