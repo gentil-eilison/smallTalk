@@ -36,7 +36,15 @@ module.exports = {
         }
     },
 
-    sendFilteredDiscover(req, res) {
-        res.sendFile("C:/Users/Spidey/Documents/projeto-integrador/smallTalk/frontend/pages/discover.html")
+    sendErrorIndex(req, res) {
+        res.sendFile("C:/Users/Spidey/Documents/projeto-integrador/smallTalk/frontend/pages/index.html")
+    },
+
+    sendSuccessIndex(req, res) {
+        res.sendFile("C:/Users/Spidey/Documents/projeto-integrador/smallTalk/frontend/pages/index.html")
+    },
+
+    sendRegisterError(req, res) {
+        res.sendFile("C:/Users/Spidey/Documents/projeto-integrador/smallTalk/frontend/pages/register.html")
     }
 }

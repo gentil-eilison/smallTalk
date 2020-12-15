@@ -39,15 +39,12 @@ async function updateScreen() {
                 user_name: await getInfoUsers('user_name'),
                 bio: await getInfoUsers('bio'),
                 icon: await getInfoUsers('src'),
-                interests: [
-                    interests
-                ]
             }
     
             $('[nome]').text(userInfo.user_name)
             $('textarea').text(userInfo.bio)
             $('[icon]').attr('src', `/img/${userInfo.icon}`)
-            userInfo.interests.forEach((e, i) => {
+            interests.forEach((e, i) => {
                 $(`label[interest][for="${e.interest_id}"]`).toggleClass('interested')
             })
         }

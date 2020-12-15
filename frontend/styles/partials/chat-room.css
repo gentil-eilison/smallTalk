@@ -22,3 +22,9 @@ body {
     width: 06em;
     height: 06em;
 }
+
+video {
+    max-width: 100%;
+    max-height: 100%;
+}
+

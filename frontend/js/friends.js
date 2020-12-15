@@ -15,7 +15,7 @@ async function updateFriends() {
     console.log(userFriends)
 
     userFriends.forEach(function(e,i) {
-        $('[amigos]').append(`<div friend-${i} style="border: 3px solid #c4c4c4; background-color: #f0e4e4;" class="mx-auto col-12 my-4 rounded container-fluid"><div class="row vishkk"><div class="rounded-circle col-5 my-3 ml-3" friend-icon><img src="img/${e.user_src}" alt=""></div><div class="ml-3 my-3 col-5 overflow-auto" nickname>${e.user_name}</div><div language-container class="col-10 mx-auto d-flex justify-content-around"></div></div><div class="row"><form method="POST" class="mt-4"><input type="hidden" name="friendId" value="${e.id}"><input type="submit" value="Perfil" formaction="/profile" class="botao-verde py-1 px-3 ml-3 mb-3"><input type="submit" value="Gerar Link" class="botao-vermelho py-1 px-3 mx-auto" formaction="/createLink"></form></div></div>`) 
+        $('[amigos]').append(`<div friend-${i} style="border: 3px solid #c4c4c4; background-color: #f0e4e4;" class="mx-auto col-12 my-4 rounded container-fluid"><div class="row vishkk"><div class="rounded-circle col-5 my-3 ml-3" friend-icon><img src="img/${e.user_src}" alt=""></div><div class="ml-3 my-3 col-5 overflow-auto" nickname>${e.user_name}</div><div language-container class="col-10 mx-auto d-flex justify-content-around"></div></div><div class="row"><form method="POST" class="mt-4"><input type="hidden" name="friendId" value="${e.id}"><input type="submit" value="Gerar Link" class="botao-vermelho py-1 px-3 mx-auto" formaction="/createLink"></form></div></div>`) 
 
         userLanguage = e.src.length
 

@@ -11,6 +11,8 @@
 
 </head>
 <body id="page-landing">
+    <div id="error-message">Os dados não estão corretos ou usuário não cadastrado. Tente novamente</div>
+    <div id="success-message">Usuário cadastrado com sucesso!</div>
     <div id="form-container">
         <div class="body-container">
             <h1>Preencha com seus dados</h1>
@@ -19,12 +21,12 @@
                         
                         <div class="email-input">
                             <label for="email">Email</label> <br>
-                            <input type="email" name="email" placeholder="jotaro@jojo.com">
+                            <input type="email" name="email" placeholder="jotaro@jojo.com" required>
                         </div>
                         
                         <div class="password-input">
                             <label for="senha">Senha</label> <br>
-                            <input type="password" name="pw" placeholder="Digite uma senha">
+                            <input type="password" name="pw" placeholder="Digite uma senha" required>
                         </div>
                      
                     </div>
@@ -78,5 +80,15 @@
     </div>
 
     <script src="/js/loginAction.js"></script>
+    <script>
+        const url = window.location.href 
+        const checkError = url.split('5005/')[1]
+        const checkSucess = url.split('5005/')[1]
+        if(checkError == "indexUserError") {
+            $('#error-message').css('display', 'block')
+        } else if(checkSucess == "indexSuccess") {
+            $('#success-message').css('display', 'block')
+        }
+    </script>
 </body>
 </html>

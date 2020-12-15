@@ -1,7 +1,7 @@
 const mysql = require('../config')
-const io = require('../server')
 const { v4: uuidV4 } = require('uuid')
 let nodemailer = require('nodemailer')
+
 module.exports = {
     getLoggedUser(req, res) {
         mysql.query('select * from users where id = ?', [global.userId], function (err, results) {
@@ -182,67 +182,72 @@ module.exports = {
                 throw err
             } else {
                 const friendshipId = results
-                friendshipId.forEach((e, i) => {
-                    mysql.query('select user1_id, user2_id from is_friends_with where id = ?', [e.id], (err, results) => {
-                        if (err) {
-                            throw err
-                        } else {
-                            results.forEach((e) => {
-                                if (e.user1_id != global.userId) {
-                                    friends.push({ id: e.user1_id })
-                                } else {
-                                    friends.push({ id: e.user2_id })
-                                }
-                            })
-
-                            if (i == friendshipId.length - 1) {
-                                friends.forEach((e, i1) => {
-                                    mysql.query('select lang_id,user_id from users_languages where user_id = ?', [e.id], (err, results1) => {
-                                        if (err) {
-                                            throw err
-                                        } else {
-                                            mysql.query('select user_name,src from users where id = ?', [e.id], (err, results3) => {
-                                                if (err) {
-                                                    throw err
-                                                } else {
-                                                    results3.forEach((e2, i2) => {
-                                                        e['user_name'] = e2.user_name
-                                                        e['user_src'] = e2.src
-                                                    })
-                                                    e['src'] = []
-                                                    results1.forEach((elem, i3) => {
-                                                        mysql.query('select src from languages where id = ?', [elem.lang_id], (err, results2) => {
-                                                            if (err) {
-                                                                throw err
-                                                            } else {
-                                                                results2.forEach((el, i9) => {
-                                                                    if (elem.user_id == e.id) {
-                                                                        e['src'].push(el.src)
-                                                                        if (i1 == friends.length - 1) {
-                                                                            counter++
-                                                                        }
-
-                                                                    }
-
-                                                                    if (i1 == friends.length - 1 && counter == results1.length) {
-                                                                        res.send(friends)
-                                                                    }
-                                                                })
-
-
-
-                                                            }
-                                                        })
-                                                    })
-                                                }
-                                            })
-                                        }
-                                    })
+                if(friendshipId.length == 0) {
+                    res.send([])
+                } else {
+                    friendshipId.forEach((e, i) => {
+                        mysql.query('select user1_id, user2_id from is_friends_with where id = ?', [e.id], (err, results) => {
+                            if (err) {
+                                throw err
+                            } else {
+                                results.forEach((e) => {
+                                    if (e.user1_id != global.userId) {
+                                        friends.push({ id: e.user1_id })
+                                    } else {
+                                        friends.push({ id: e.user2_id })
+                                    }
                                 })
+    
+                                if (i == friendshipId.length - 1) {
+                                    friends.forEach((e, i1) => {
+                                        mysql.query('select lang_id,user_id from users_languages where user_id = ?', [e.id], (err, results1) => {
+                                            if (err) {
+                                                throw err
+                                            } else {
+                                                mysql.query('select user_name,src from users where id = ?', [e.id], (err, results3) => {
+                                                    if (err) {
+                                                        throw err
+                                                    } else {
+                                                        results3.forEach((e2, i2) => {
+                                                            e['user_name'] = e2.user_name
+                                                            e['user_src'] = e2.src
+                                                        })
+                                                        e['src'] = []
+                                                        results1.forEach((elem, i3) => {
+                                                            mysql.query('select src from languages where id = ?', [elem.lang_id], (err, results2) => {
+                                                                if (err) {
+                                                                    throw err
+                                                                } else {
+                                                                    results2.forEach((el, i9) => {
+                                                                        if (elem.user_id == e.id) {
+                                                                            e['src'].push(el.src)
+                                                                            if (i1 == friends.length - 1) {
+                                                                                counter++
+                                                                            }
+    
+                                                                        }
+    
+                                                                        if (i1 == friends.length - 1 && counter == results1.length) {
+                                                                            res.send(friends)
+                                                                        }
+                                                                    })
+    
+    
+    
+                                                                }
+                                                            })
+                                                        })
+                                                    }
+                                                })
+                                            }
+                                        })
+                                    })
+                                }
                             }
-                        }
+                        })
                     })
-                })
+                }
+                
             }
         })
     },
@@ -265,7 +270,7 @@ module.exports = {
                             chatters.friend = e.id
                         })
 
-                        mysql.query('select id from meetings_users where (participant1_id = ? or participant2_id = ?) and (participant2_id = ? or participant2_id = ?)', [chatters.user, chatters.friend, chatters.user, chatters.friend], (err, results) => {
+                        mysql.query('select id from meetings_users where (participant1_id = ? or participant1_id = ?) and (participant2_id = ? or participant2_id = ?)', [chatters.user, chatters.friend, chatters.user, chatters.friend], (err, results) => {
                             if (err) {
                                 throw err
                             } else {
@@ -330,6 +335,7 @@ module.exports = {
                                     if (err) {
                                         throw err
                                     } else {
+                                        
                                         keys[i2]['user1_email'] = results3[0].email
                                     }
                                 })
@@ -355,22 +361,32 @@ module.exports = {
     },
 
     sendMail(req, res, next) {
-
-        mysql.query('select pw from users where id = ?', [global.userId], (err, results) => {
+        let sender = null 
+        let recipient = null
+        mysql.query('select pw, email from users where id = ?', [global.userId], (err, results) => {
             if (err) {
                 throw err
             } else {
+                console.log(req.body.data)
+                if(req.body.data[0] === results[0].email) {
+                    sender = results[0].email
+                    recipient = req.body.data[1] 
+                } else {
+                    sender = req.body.data[1]
+                    recipient = req.body.data[0]
+                }
+
                 let transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
-                        user: req.body.data[0],
+                        user: sender,
                         pass: results[0].pw
                     }
                 })
 
                 let mailOptions = {
-                    from: req.body.data[0],
-                    to: req.body.data[1],
+                    from: sender,
+                    to: recipient,
                     subject: `Chat Invitation`,
                     text: `Hi! I'm inviting you to a chat! Heres the key: ${req.body.data[2]}`
                 }
@@ -382,9 +398,15 @@ module.exports = {
                         console.log('Email sent:' + info.response)
                     }
                 })
-                res.redirect('/friends')
+                console.log(sender)
+                console.log(recipient);
+                res.redirect(`chat/${req.body.data[2]}`)
             }
         })
-    }
+    },
 
+    preapreRoom(req, res, next) {
+        res.sendFile('C:/Users/Spidey/Documents/projeto-integrador/smallTalk/frontend/pages/chat-room.html')
+        
+    },
 }

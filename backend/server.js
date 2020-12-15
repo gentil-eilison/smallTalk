@@ -20,9 +20,19 @@ mysql.connect((error) => {
     }
 })
 
-app.listen(5005, () => {
-    console.log('Server running on port 5005.')
+io.on('connection', socket => {
+  socket.on('join-room', (roomId, userId) => {
+    socket.join(roomId)
+    socket.to(roomId).broadcast.emit('user-connected', userId)
+
+    socket.on('disconnect', () => {
+      socket.to(roomId).broadcast.emit('user-disconnected', userId)
+    })
+  })
 })
 
-module.exports = io
+  server.listen(5005, () => {
+    console.log('Server running on port 5005.')
+  })
+
 

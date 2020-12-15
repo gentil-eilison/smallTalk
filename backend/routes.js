@@ -10,6 +10,12 @@ router.get('/discover', PageController.sendDiscover)
 
 router.get('/index', PageController.sendIndex)
 
+router.get('/indexUserError', PageController.sendErrorIndex)
+
+router.get('/indexSuccess', PageController.sendSuccessIndex)
+
+router.get('/registerError', PageController.sendRegisterError)
+
 router.get('/register', PageController.sendRegister)
 
 router.use('/profile/:id', UserController.getSimpleProfileInfo)
@@ -75,8 +81,9 @@ router.post('/createLink', FrontController.createLink)
 
 router.get('/getKeys', FrontController.getKeys)
 
-router.post('/sendMail', FrontController.sendMail)
-//router.get(':room', FrontController.prepareRoom)
+router.use('/sendMail', FrontController.sendMail)
+
+router.get('/chat/:room', FrontController.preapreRoom)
 
 module.exports = router
 

@@ -1,3 +1,4 @@
+const { query } = require('express')
 const mysql = require('../config')
 const FrontController = require('./FrontController')
 const PageController = require('./PageController')
@@ -9,16 +10,13 @@ module.exports = {
 
     createUser(req, res, next) {
         if(req.body.pw === req.body.cpw) {
-            initialStateInterest = true
+                initialStateInterest = true
 
-            mysql.query("insert into users (src, user_name, email, pw, birthdate, bio) values (?,?,?,?,?,?)", [null, req.body.user_name,req.body.email,req.body.pw, req.body.birthdate, null])
+                mysql.query("insert into users (src, user_name, email, pw, birthdate, bio) values (?,?,?,?,?,?)", [null, req.body.user_name,req.body.email,req.body.pw, req.body.birthdate, null])
 
-            res.redirect('/index')
-                console.log('User successfully created')
+                res.redirect('/indexSuccess')
             } else {
-                console.log("passwords don't match.")
-
-                res.redirect('/register')
+                res.redirect('/registerError')
             }
     },
 
@@ -31,10 +29,18 @@ module.exports = {
             if(err) {
                 throw err 
             } else {
-               userId = results[0].id
-               autResult = true 
+                const queryResult = results[0] != undefined ? true : false 
+               if(queryResult) {
+                    userId = results[0].id
+                    autResult = true 
+                    autUser(autResult)
+                   
+                } else {
+                    autResult = false 
+                    autUser(autResult)
+               }
 
-               autUser(autResult)
+               
                
             }
         })
@@ -43,7 +49,7 @@ module.exports = {
             if(autResult) {
                 res.redirect('/discover')
             } else {
-                res.send('User not found')
+                res.redirect('/indexUserError')
             }
         }
 
