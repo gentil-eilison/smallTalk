@@ -1,12 +1,12 @@
 const mysql = require('../config')
 const io = require('../server')
 const { v4: uuidV4 } = require('uuid')
-
+let nodemailer = require('nodemailer')
 module.exports = {
     getLoggedUser(req, res) {
         mysql.query('select * from users where id = ?', [global.userId], function (err, results) {
-            if(err) {
-                throw err 
+            if (err) {
+                throw err
             } else {
                 res.send(results[0])
             }
@@ -194,22 +194,22 @@ module.exports = {
                                     friends.push({ id: e.user2_id })
                                 }
                             })
-                            
+
                             if (i == friendshipId.length - 1) {
-                                friends.forEach((e ,i1) => {
+                                friends.forEach((e, i1) => {
                                     mysql.query('select lang_id,user_id from users_languages where user_id = ?', [e.id], (err, results1) => {
                                         if (err) {
                                             throw err
                                         } else {
                                             mysql.query('select user_name,src from users where id = ?', [e.id], (err, results3) => {
-                                                if(err) {
+                                                if (err) {
                                                     throw err
                                                 } else {
                                                     results3.forEach((e2, i2) => {
-                                                        e['user_name'] = e2.user_name 
+                                                        e['user_name'] = e2.user_name
                                                         e['user_src'] = e2.src
                                                     })
-                                                    e['src'] = []  
+                                                    e['src'] = []
                                                     results1.forEach((elem, i3) => {
                                                         mysql.query('select src from languages where id = ?', [elem.lang_id], (err, results2) => {
                                                             if (err) {
@@ -217,25 +217,25 @@ module.exports = {
                                                             } else {
                                                                 results2.forEach((el, i9) => {
                                                                     if (elem.user_id == e.id) {
-                                                                            e['src'].push(el.src)
-                                                                            if(i1 == friends.length-1) {
-                                                                                counter++
-                                                                            }
-            
-                                                                    }  
+                                                                        e['src'].push(el.src)
+                                                                        if (i1 == friends.length - 1) {
+                                                                            counter++
+                                                                        }
 
-                                                                    if(i1 == friends.length-1 && counter == results1.length) {
+                                                                    }
+
+                                                                    if (i1 == friends.length - 1 && counter == results1.length) {
                                                                         res.send(friends)
                                                                     }
                                                                 })
-                                                                
-                                                               
-                                                                
+
+
+
                                                             }
-                                                        }) 
+                                                        })
                                                     })
                                                 }
-                                            }) 
+                                            })
                                         }
                                     })
                                 })
@@ -248,40 +248,40 @@ module.exports = {
     },
 
     createLink(req, res, next) {
-        let chatters = {user: null, friend: null, id: uuidV4()}
+        let chatters = { user: null, friend: null, id: uuidV4() }
         mysql.query('select id from users where id = ?', [global.userId], (err, results) => {
-            if(err) {
-                throw err 
+            if (err) {
+                throw err
             } else {
-                results.forEach((e,i) => {
+                results.forEach((e, i) => {
                     chatters.user = e.id
                 })
 
                 mysql.query('select id from users where id = ?', [req.body.friendId], (err, results) => {
-                    if(err) {
-                        throw err 
+                    if (err) {
+                        throw err
                     } else {
                         results.forEach((e, i) => {
-                            chatters.friend = e.id 
+                            chatters.friend = e.id
                         })
 
                         mysql.query('select id from meetings_users where (participant1_id = ? or participant2_id = ?) and (participant2_id = ? or participant2_id = ?)', [chatters.user, chatters.friend, chatters.user, chatters.friend], (err, results) => {
-                            if(err) {
-                                throw err 
+                            if (err) {
+                                throw err
                             } else {
-                                if(results.length == 0) {
+                                if (results.length == 0) {
                                     mysql.query('insert into meetings(room_key) values(?)', [chatters.id], (err) => {
-                                        if(err) {
-                                            throw err 
+                                        if (err) {
+                                            throw err
                                         } else {
                                             mysql.query('select id from meetings where room_key = ?', [chatters.id], (err, results) => {
-                                                if(err) {
-                                                    throw err 
+                                                if (err) {
+                                                    throw err
                                                 } else {
                                                     mysql.query('insert into meetings_users(participant1_id, participant2_id, room_key) values(?,?,?)', [chatters.user, chatters.friend, results[0].id], (err) => {
-                                                        if(err) {
+                                                        if (err) {
                                                             console.log('Não foi possível registrar a sala.')
-                                                            throw err 
+                                                            throw err
                                                         } else {
                                                             console.log("Sala registrada com sucesso.")
                                                             res.redirect('/friends')
@@ -293,20 +293,20 @@ module.exports = {
                                     })
                                 } else {
                                     mysql.query('update meetings set room_key = ? where id = ?', [chatters.id, results[0].id], (err, results) => {
-                                        if(err) {
+                                        if (err) {
                                             console.log('Houve um erro ao atualizar a chave.')
-                                            throw err 
+                                            throw err
                                         } else {
                                             console.log('Chave atualizada com sucesso.')
                                             res.redirect('/friends')
                                         }
                                     })
-                                } 
+                                }
                             }
                         })
                     }
                 })
-                
+
             }
         })
     },
@@ -314,33 +314,33 @@ module.exports = {
     getKeys(req, res, next) {
         let keys = []
         mysql.query('select room_key, participant1_id, participant2_id from meetings_users where (participant1_id = ? or participant2_id = ?)', [global.userId, global.userId], (err, results1) => {
-            if(err) {
-                throw err 
+            if (err) {
+                throw err
             } else {
-                results1.forEach((e,i2) => {
+                results1.forEach((e, i2) => {
                     keys.push({})
                     mysql.query('select room_key from meetings where id = ?', [e.room_key], (err, results) => {
-                        if(err) {
-                            throw err 
+                        if (err) {
+                            throw err
                         } else {
-                            results.forEach((e2,i) => {
-                                keys[i2]['room_key'] = e2.room_key 
+                            results.forEach((e2, i) => {
+                                keys[i2]['room_key'] = e2.room_key
 
                                 mysql.query('select email from users where id = ?', [e.participant1_id], (err, results3) => {
-                                    if(err) {
-                                        throw err 
+                                    if (err) {
+                                        throw err
                                     } else {
                                         keys[i2]['user1_email'] = results3[0].email
                                     }
                                 })
 
                                 mysql.query('select email from users where id = ?', [e.participant2_id], (err, results4) => {
-                                    if(err) {
-                                        throw err 
+                                    if (err) {
+                                        throw err
                                     } else {
                                         keys[i2]['user2_email'] = results4[0].email
 
-                                        if(i2 == results1.length-1) {
+                                        if (i2 == results1.length - 1) {
                                             res.send(keys)
                                         }
                                     }
@@ -349,13 +349,42 @@ module.exports = {
                         }
                     })
                 })
-                
+
             }
         })
     },
 
     sendMail(req, res, next) {
-        res.send(req.body.data)
+
+        mysql.query('select pw from users where id = ?', [global.userId], (err, results) => {
+            if (err) {
+                throw err
+            } else {
+                let transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: req.body.data[0],
+                        pass: results[0].pw
+                    }
+                })
+
+                let mailOptions = {
+                    from: req.body.data[0],
+                    to: req.body.data[1],
+                    subject: `Chat Invitation`,
+                    text: `Hi! I'm inviting you to a chat! Heres the key: ${req.body.data[2]}`
+                }
+
+                transporter.sendMail(mailOptions, function (err, info) {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log('Email sent:' + info.response)
+                    }
+                })
+                res.redirect('/friends')
+            }
+        })
     }
 
 }
