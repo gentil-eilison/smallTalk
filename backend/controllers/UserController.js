@@ -217,7 +217,25 @@ module.exports = {
                             throw err
                         } else {
                             console.log('Friend successfully deleted.')
-                            res.redirect('/discover')
+                            mysql.query('select room_key from meetings_users where (participant1_id = ? or participant1_id = ?) and (participant2_id = ? or participant2_id = ?)', [userId, req.body.id, userId, req.body.id], (err, results) => {
+                                if(err) {
+                                    throw err 
+                                } else {
+                                    if(results.length > 0) {
+                                        mysql.query('delete from meetings_users where room_key = ?', [results[0].room_key])
+                                        mysql.query('delete from meetings where id = ?', [results[0].room_key], (err, results) => {
+                                            if(err) {
+                                                throw err 
+                                            } else {
+                                                res.redirect('/discover')
+                                            }
+                                        })
+                                    } else {
+                                        res.redirect('/discover')
+                                    }
+                                }
+                            })
+                            
                         }
                     })
                 } else {
