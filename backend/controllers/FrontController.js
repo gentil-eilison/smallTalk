@@ -178,6 +178,7 @@ module.exports = {
     getUserFriends(req, res, next) {
         let friends = []
         let counter = 0
+        let counter2 = 0
         mysql.query('select id from is_friends_with where user1_id = ? or user2_id = ?', [global.userId, global.userId], (err, results) => {
             if (err) {
                 throw err
@@ -206,9 +207,30 @@ module.exports = {
                                                 throw err
                                             } else {
                                                 if(results1.length == 0) {
-                                                    if(i1 == friends.length - 1) {
-                                                        res.send(friends)
-                                                    }
+                                                    mysql.query('select user_name,src from users where id = ?', [e.id], (err, results3) => {
+                                                        if (err) {
+                                                            throw err
+                                                        } else {
+                                                            results3.forEach((e2, i2) => {
+                                                                e['user_name'] = e2.user_name
+                                                                e['user_src'] = e2.src
+                                                                e['src'] = []
+                                                            })
+                                                            
+                                                            if(friends.length-1 == i1) {
+                                                                counter2++
+                                                            }
+
+                                                            if(counter2 > 0) {
+                                                                counter2 = friends.length
+                                                            }
+
+                                                            if(counter2 == friends.length) {
+                                                                res.send(friends)
+                                                            }
+                                                        }
+                                                    })
+                                                    
                                                 }
                                                 mysql.query('select user_name,src from users where id = ?', [e.id], (err, results3) => {
                                                     if (err) {
