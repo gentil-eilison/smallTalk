@@ -52,7 +52,7 @@ module.exports = {
     },
 
     getNotLoggedUsersLanguages(req, res) {
-        mysql.query('select lang_id, user_id from users_languages where user_id != ?', [global.userId], function (err, results) {
+        mysql.query('select * from users_languages where user_id != ?', [global.userId], function (err, results) {
             if (err) {
                 throw err
             } else {
@@ -63,30 +63,31 @@ module.exports = {
                     }
                 })
 
-                const languagesSrc = []
+                if(results.length == 0) {
+                    res.send([])
+                } else {
+                    const languagesSrc = []
 
-                languagesId.forEach((e, i) => {
-                    mysql.query('select src from languages where id = ?', [e.lang_id], function (err, results) {
-                        if (err) {
-                            throw err
-                        } else {
-                            const final = {
-                                user_id: e.user_id,
-                                lang_src: results[0].src
-                            }
-
-                            if (languagesId.length === i + 1) {
-                                languagesSrc.push(final)
-                                res.send(languagesSrc)
+                    languagesId.forEach((e, i) => {
+                        mysql.query('select src from languages where id = ?', [e.lang_id], function (err, results) {
+                            if (err) {
+                                throw err
                             } else {
-                                languagesSrc.push(final)
+                                const final = {
+                                    user_id: e.user_id,
+                                    lang_src: results[0].src
+                                }
+    
+                                if (languagesId.length === i + 1) {
+                                    languagesSrc.push(final)
+                                    res.send(languagesSrc)
+                                } else {
+                                    languagesSrc.push(final)
+                                }
                             }
-
-
-
-                        }
+                        })
                     })
-                })
+                }
 
             }
         })
@@ -204,6 +205,11 @@ module.exports = {
                                             if (err) {
                                                 throw err
                                             } else {
+                                                if(results1.length == 0) {
+                                                    if(i1 == friends.length - 1) {
+                                                        res.send(friends)
+                                                    }
+                                                }
                                                 mysql.query('select user_name,src from users where id = ?', [e.id], (err, results3) => {
                                                     if (err) {
                                                         throw err
@@ -228,6 +234,7 @@ module.exports = {
                                                                         }
     
                                                                         if (i1 == friends.length - 1 && counter == results1.length) {
+                                                                            console.log(friends);
                                                                             res.send(friends)
                                                                         }
                                                                     })

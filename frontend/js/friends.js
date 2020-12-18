@@ -15,12 +15,14 @@ async function updateFriends() {
     console.log(userFriends)
 
     userFriends.forEach(function(e,i) {
-        $('[amigos]').append(`<div friend-${i} style="border: 3px solid #c4c4c4; background-color: #f0e4e4;" class="mx-auto col-12 my-4 rounded container-fluid"><div class="row vishkk"><div class="rounded-circle col-5 my-3 ml-3" friend-icon><img src="img/${e.user_src}" alt=""></div><div class="ml-3 my-3 col-5 overflow-auto" nickname>${e.user_name}</div><div language-container class="col-10 mx-auto d-flex justify-content-around"></div></div><div class="row"><form method="POST" class="mt-4"><input type="hidden" name="friendId" value="${e.id}"><input type="submit" value="Gerar Link" class="botao-vermelho py-1 px-3 mx-auto" formaction="/createLink"></form></div></div>`) 
+        $('[amigos]').append(`<div friend-${i} style="border: 3px solid #c4c4c4; background-color: #f0e4e4;" class="mx-auto col-12 my-4 rounded container-fluid"><div class="row vishkk"><div class="rounded-circle col-5 my-3 ml-3" friend-icon><img src="img/${e.user_src == null ? 'profile_01.svg' : e.user_src}" alt=""></div><div class="ml-3 my-3 col-5 overflow-auto" nickname>${e.user_name}</div><div language-container class="col-10 mx-auto d-flex justify-content-around"></div></div><div class="row"><form method="POST" class="mt-4"><input type="hidden" name="friendId" value="${e.id}"><input type="submit" value="Gerar Link" class="botao-vermelho py-1 px-3 mx-auto" formaction="/createLink"></form></div></div>`) 
 
-        userLanguage = e.src.length
+        userLanguage = e.src.length > 0 ? e.src.length : false 
 
-        for(let index=0; index < userLanguage; index++) {
-            $(`[amigos] [friend-${i}] .vishkk [language-container]`).append(`<div language class="bg-white rounded-circle align-self-center"><img src="${e.src[index]}" alt=""></div>`)
+        if(userLanguage) {
+            for(let index=0; index < userLanguage; index++) {
+                $(`[amigos] [friend-${i}] .vishkk [language-container]`).append(`<div language class="bg-white rounded-circle align-self-center"><img src="${e.src[index]}" alt=""></div>`)
+            }
         }
         
     })
@@ -31,7 +33,7 @@ async function updateFriends() {
 }
 
 async function updateScreen() {
-    $('[icon]').attr('src', `/img/${await getInfoUsers('src')}`)
+    $('[icon]').attr('src', `/img/${await getInfoUsers('src') == null ? 'profile_01.svg' : await getInfoUsers('src')}`)
     $('[nome]').text(`${await getInfoUsers('user_name')}`)
 
     const data = await getInfoSrcUsersLanguages()

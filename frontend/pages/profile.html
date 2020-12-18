@@ -252,5 +252,27 @@
 
     <script type="module" src="../js/profile.js"></script>
 
+    <script>
+            const url = window.location.href 
+            const checkFriendProfile = url.split('/')[3]
+        
+            if(checkFriendProfile == "friendProfile") {
+                const inputs = Array.from(document.querySelectorAll('input:not([value="VOLTAR PARA MEU FEED"])'))
+                const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]'))
+                
+                inputs.forEach(e => {
+                    e.setAttribute('disabled', '')
+                })
+
+                checkboxes.forEach(e => {
+                    e.setAttribute('diabled', '')
+                })
+
+                document.querySelectorAll('textarea').forEach(e => {
+                    e.setAttribute('disabled', '')
+                })
+            }
+        
+    </script>
 </body>
 </html>

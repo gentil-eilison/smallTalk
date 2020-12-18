@@ -26,13 +26,21 @@ async function updateScreen() {
 
         if(isFriendProfile) {
             const friendProfileInfo = await getInfoFriendProfile()
+
+            const friendProfileItem = friendProfileInfo.img_src != null && friendProfileInfo.img_src != '' ? friendProfileInfo.img_src : '/profile_01.svg' 
     
             $('[nome]').text(friendProfileInfo.user_name)
             $('textarea').text(friendProfileInfo.bio)
-            $('[icon]').attr('src', `/img/${friendProfileInfo.img_src}`)
+            $('[icon]').attr('src', `/img/${friendProfileItem}`)
             friendProfileInfo.interests_id.forEach((e, i) => {
                 $(`label[interest][for="${e}"]`).toggleClass('interested')
             })
+
+            friendProfileInfo.langs_src.forEach((e, i) => {
+                $(`.languages-container`).append(`<img spoken-lang-${i} class="rounded-circle ml-2" width="60px" height="60px"></img>`)
+
+                $(`[spoken-lang-${i}]`).attr('src', `${e}`)
+             })
         } else {
             let interests = await getInfoUserInterests()
             const userInfo = {
@@ -40,13 +48,17 @@ async function updateScreen() {
                 bio: await getInfoUsers('bio'),
                 icon: await getInfoUsers('src'),
             }
+
+            const profileItem = userInfo.icon != null && userInfo.icon != '' ? userInfo.icon : '/profile_01.svg'
     
             $('[nome]').text(userInfo.user_name)
             $('textarea').text(userInfo.bio)
-            $('[icon]').attr('src', `/img/${userInfo.icon}`)
+            $('[icon]').attr('src', `/img/${profileItem}`)
             interests.forEach((e, i) => {
                 $(`label[interest][for="${e.interest_id}"]`).toggleClass('interested')
             })
+
+            updateProfileLanguages()
         }
     
 }   
@@ -63,7 +75,6 @@ async function updateProfileLanguages() {
         $(`[spoken-lang-${i}]`).attr('src', `${e.src}`)
     })
 }
-updateProfileLanguages()
 
 async function populateRemoveLanguagesForm() {
     const languagesId = await getInfoUserLanguagesId()
@@ -83,19 +94,24 @@ populateRemoveLanguagesForm()
 
 // Dinamics Control
 
-$('[interest]').each((i, e) => {
-    const attr_value = $(e).attr('name')
+const url = window.location.href 
+const checkFriendProfile = url.split('/')[3]
 
-    $(e).on('click', function(e) {
-        if($(this).hasClass('interested')) {
-            $(this).removeClass('interested')
-            $(this).attr('name', null)
-        } else {
-            $(this).addClass('interested')
-            $(this).attr('name', `${attr_value}`)
-        }
+if(checkFriendProfile != "friendProfile") {
+    $('[interest]').each((i, e) => {
+        const attr_value = $(e).attr('name')
+        
+        $(e).on('click', function(e) {
+            if($(this).hasClass('interested')) {
+                $(this).removeClass('interested')
+                $(this).attr('name', null)
+            } else {
+                $(this).addClass('interested')
+                $(this).attr('name', `${attr_value}`)
+            }
+        })
     })
-})
+}
 
 $('input[value="EXCLUIR CONTA"]').on('click', () => {
     $('[confirm]').show()

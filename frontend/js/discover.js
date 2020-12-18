@@ -19,6 +19,8 @@ async function updateDiscoverArea() {
     const users_languages = await getInfoNotLoggedUsersLanguages()
     const userFriends = await getInfoUserFriends()
 
+    console.log(userFriends);
+
         notLoggedUsers.forEach((e, i) => {
             // Dados sobre os amigos
             let isFriend = false
@@ -85,7 +87,11 @@ async function updateScreen() {
     $('.body-container .profile-item .heading .title span')
         .text(await getInfoUsers('user_name'))
 
-    $('.body-container .profile-item .heading .title img').attr('src', `/img/${await getInfoUsers('src')}`)
+    const infoUserSrc = await getInfoUsers('src')
+
+    const userSrc = infoUserSrc != null && infoUserSrc != '' ? infoUserSrc : '/profile_01.svg' 
+
+    $('.body-container .profile-item .heading .title img').attr('src', `/img/${userSrc}`)
 
     updateUserLanguages()
 
