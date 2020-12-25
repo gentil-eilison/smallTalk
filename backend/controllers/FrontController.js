@@ -1,4 +1,5 @@
 const mysql = require('../config')
+const path = require('path')
 const { v4: uuidV4 } = require('uuid')
 let nodemailer = require('nodemailer')
 
@@ -435,7 +436,7 @@ module.exports = {
     },
 
     preapreRoom(req, res, next) {
-        res.sendFile('C:/Users/Spidey/Documents/projeto-integrador/smallTalk/frontend/pages/chat-room.html')
+        res.sendFile(path.resolve(__dirname + '../../../frontend/pages/chat-room.html'))
         
     },
 }
