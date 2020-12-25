@@ -11,7 +11,7 @@ Projeto integrador de Alyson e Kadson
    3.2. Tenha certeza de que a porta 5005 está livre
 
 4.Navegue até backend/node_modules/peer
-    4.1.Digite peerjs --port numerodaporta
+    4.1.Digite node peerjs --port numerodaporta
 
 5.Small Talk!
 
@@ -25,6 +25,6 @@ Projeto integrador de Alyson e Kadson
     3.2. Make sure that 5005 port is not being used 
 
 4.Go to path backend/node_modules/peer
-    4.1.Type peerjs --port portnumber 
+    4.1.Type node peerjs --port portnumber 
 
 5.Small Talk!
